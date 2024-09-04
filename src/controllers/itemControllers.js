@@ -1,12 +1,21 @@
 const connection = require('../config/database');
-console.log(connection);
-const getItems = (req, res) => {
-    connection.query('SELECT * FROM ITEMS', function (err, rows) {
-        res.status(200).json(rows);
-    });
-    // return res.render('index');
+
+
+const getHome = (req, res) => {
+    return res.render('home');
+}
+
+const getItems = async (req, res) => {
+    const [ rows ] = await connection.query('SELECT * FROM ITEMS');
+    res.status(200).send(rows);
+}
+
+const createItem = (req, res) => {
+    res.send(req.body);
 }
 
 module.exports = {
-    getItems
+    getHome,
+    getItems,
+    createItem
 }

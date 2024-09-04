@@ -7,12 +7,14 @@ const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 
 const port = process.env.SERVER_PORT;
-configViewEngine(app);
 
-app.use(cors());
-app.use('/v1', webRoutes);
-// config static file
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use('/', webRoutes);
+
+configViewEngine(app);
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)

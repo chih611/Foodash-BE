@@ -1,21 +1,31 @@
-const connection = require('../config/database');
+// const connection = require('../config/database');
+const { getAllItems, createItem } = require('../model/crud');
 
-
-const getHome = (req, res) => {
+const getHomePage = (req, res) => {
     return res.render('home');
 }
 
-const getItems = async (req, res) => {
-    const [ rows ] = await connection.query('SELECT * FROM ITEMS');
-    res.status(200).send(rows);
+const getAllItemsPage = async (req, res) => {
+    rs = await getAllItems();
+    let fields = [];
+    rs.fields.forEach(element => {
+        fields.push(element.name);
+    });
+    return res.render('view', { listItems: { rows: rs.rows, fields: fields } });
 }
 
-const createItem = (req, res) => {
-    res.send(req.body);
+const createItemPage = async (req, res) => {
+    return res.render('create');
+}
+const createItemPostPage = async (req, res) => {
+    const { item_id, item_name } = req.body;
+    await createItem(item_id, item_name);
+    res.redirect('/item');
 }
 
 module.exports = {
-    getHome,
-    getItems,
-    createItem
+    getHomePage,
+    getAllItemsPage,
+    createItemPage,
+    createItemPostPage
 }

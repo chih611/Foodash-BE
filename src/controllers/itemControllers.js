@@ -15,9 +15,11 @@ const getAllItemsPage = async (req, res) => {
 }
 
 const createItemPage = async (req, res) => {
+    const { item_id, item_name } = req.query;
+    await createItem(item_id, item_name);
     return res.render('create');
 }
-const createItemPostPage = async (req, res) => {
+const createItemByFormPage = async (req, res) => {
     const { item_id, item_name } = req.body;
     await createItem(item_id, item_name);
     res.redirect('/item');
@@ -27,5 +29,5 @@ module.exports = {
     getHomePage,
     getAllItemsPage,
     createItemPage,
-    createItemPostPage
+    createItemByFormPage
 }

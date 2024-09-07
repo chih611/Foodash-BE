@@ -19,7 +19,6 @@ const createItemPage = async (req, res) => {
 }
 const createItemAPI = async (req, res) => {
     const { item_name } = (req.body !== undefined) ? req.body : req.query;
-    console.log(req.body);
     await createItem(item_name);
     res.redirect('/item');
 }
@@ -30,9 +29,9 @@ const updateItemPage = async (req, res) => {
     res.render('update', { id: id, name: name });
 }
 const updateItemAPI = async (req, res) => {
-    const { item_name } = (req.body !== undefined) ? req.body : req.query;
-    const { id } = (req.body !== undefined) ? req.body : req.params;
-    console.log(id, item_name);
+    const { item_name } = (req.query) ? req.query : req.body;
+    console.log(req.query);
+    const { id } = (req.params) ? req.params : req.body;
     await updateItem(id, item_name);
     res.redirect('/item');
 }
@@ -43,7 +42,6 @@ const deleteItemPage = async (req, res) => {
 }
 const deleteItemAPI = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     await deleteItembyId(id);
     res.redirect('/item');
 }

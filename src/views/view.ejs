@@ -8,7 +8,8 @@
 <body>
     <div class="header">
         <h1>http://localhost:8080/item</h1>
-        <a href="/item/create" class="add_new_btn">Add new</a>
+        <a href="/" class="back_home_btn">Back to home</a>
+        <a href="/item/create/view" class="add_new_btn">Add new</a>
     </div>
 
     <table id="items">
@@ -28,8 +29,8 @@
                 <td>
                     <%= row.itemName %>
                 </td>
-                <td><a href="/item">update</a></td>
-                <td><a href="/item">delete</a></td>
+                <td><a href="/item/update/view/<%= row.itemId%>">update</a></td>
+                <td><a href="/item/delete/view/<%= row.itemId %>">delete</a></td>
             </tr>
             <% }) %>
     </table>

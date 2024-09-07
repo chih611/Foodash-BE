@@ -9,19 +9,19 @@
 </head>
 
 <body>
-    <h1>http://localhost:8080/item/create?[field]=</h1>
+    <h1>http://localhost:8080/item/update/[id]?[field]=</h1>
 
     <div class="container">
-        <form action="/item/create" method="post">
+        <form action="/item/update/<%=id%>?_method=PUT" method="post">
             <div class="row">
                 <div class="col-25">
                     <label for="fname">Item Name</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id='fname' name="item_name" placeholder="Item name...">
+                    <input type="text" id='fname' name="item_name" value="<%= name%>">
                 </div>
                 <div class="col-75">
-                    <input type="text" id='fid' name="item_id" style="display: none;">
+                    <input type="text" id='fid' name="id" style="display: none;" value=<%=id%>>
                 </div>
             </div>
 

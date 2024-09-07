@@ -5,54 +5,41 @@ const getHomePage = (req, res) => {
     return res.render('home');
 }
 
-const getAllItemsPage = async (req, res) => {
-    rs = await getAllItems();
-    let fields = [];
-    rs.fields.forEach(element => {
-        fields.push(element.name);
-    });
-    return res.render('view', { listItems: { rows: rs.rows, fields: fields } });
+const getAllItemsAPI = async (req, res) => {
+    const { rows } = await getAllItems();
+    if (rows.length === 0) {
+        res.send(`No data found!!!`);
+    } else {
+        const formattedOutput = rows.map(row => JSON.stringify(row)).join('\n');
+        res.setHeader('Content-Type', 'application/json');
+        res.send(formattedOutput);
+    }
 }
 
-const createItemPage = async (req, res) => {
-    return res.render('create');
-}
 const createItemAPI = async (req, res) => {
-    const { item_name } = (req.body !== undefined) ? req.body : req.query;
+    const { item_name } = req.query;
     const rs = await createItem(item_name);
-    res.send(rs);
-    // res.redirect('/item');
+    res.status(200).json('Created successfully!');
 }
-const updateItemPage = async (req, res) => {
+
+const updateItemAPI = async (req, res) => {
     const { id } = req.params;
     const record = await getItemById(id);
-    const name = record[ 0 ].itemName;
-    res.render('update', { id: id, name: name });
+    const { item_name } = req.query;
+    const rs = await updateItem(id, item_name);
+    res.status(200).json('Updated successfully!');
 }
-const updateItemAPI = async (req, res) => {
-    const { item_name } = (req.query) ? req.query : req.body;
-    console.log(req.query);
-    const { id } = (req.params) ? req.params : req.body;
-    await updateItem(id, item_name);
-    res.redirect('/item');
-}
-const deleteItemPage = async (req, res) => {
-    const { id } = req.params;
-    await deleteItembyId(id);
-    res.redirect('/item');
-}
+
 const deleteItemAPI = async (req, res) => {
     const { id } = req.params;
-    await deleteItembyId(id);
-    res.redirect('/item');
+    const rs = await deleteItembyId(id);
+    res.status(200).json(`Item ${id} has been deleted successfully!`);
 }
+
 module.exports = {
     getHomePage,
-    getAllItemsPage,
-    createItemPage,
+    getAllItemsAPI,
     createItemAPI,
-    updateItemPage,
     updateItemAPI,
-    deleteItemPage,
     deleteItemAPI
 }

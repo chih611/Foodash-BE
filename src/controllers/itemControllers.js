@@ -19,8 +19,9 @@ const createItemPage = async (req, res) => {
 }
 const createItemAPI = async (req, res) => {
     const { item_name } = (req.body !== undefined) ? req.body : req.query;
-    await createItem(item_name);
-    res.redirect('/item');
+    const rs = await createItem(item_name);
+    res.send(rs);
+    // res.redirect('/item');
 }
 const updateItemPage = async (req, res) => {
     const { id } = req.params;

@@ -4,7 +4,8 @@ const { getHomePage,
     getAllItemsAPI,
     createItemAPI,
     updateItemAPI,
-    deleteItemAPI } = require('../controllers/itemController');
+    deleteItemAPI
+} = require('../controllers/itemController');
 
 const { getAllInventoryAPI,
     createInventoryAPI,

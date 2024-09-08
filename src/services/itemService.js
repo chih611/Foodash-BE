@@ -6,8 +6,7 @@ const getAllItems = async () => {
 }
 
 const createItem = async (item_name) => {
-    await connection.query(`INSERT INTO ITEMS (ITEM_NAME)
-VALUES (?);`, [ item_name ]);
+    await connection.query(`INSERT INTO ITEMS (ITEM_NAME) VALUES (?);`, [ item_name ]);
 }
 
 const updateItem = async (itemId, itemName) => {

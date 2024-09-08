@@ -1,10 +1,10 @@
 // const connection = require('../config/database');
-const { getAllItems, createItem, updateItem, deleteItembyId } = require('../services/crud');
+const { getAllItems, createItem, updateItem, deleteItembyId } = require('../services/itemService');
 const { handleGetAllAPI,
     handleCreateAPI,
     handleUpdateAPI,
     handleDeleteAPI
-} = require('../models/itemModel');
+} = require('../models/handlinModel');
 
 const getHomePage = (req, res) => {
     return res.render('home');
@@ -19,7 +19,6 @@ const createItemAPI = async (req, res) => {
     const { item_name } = req.query;
     await createItem(item_name);
     await handleCreateAPI(res);
-
 }
 
 const updateItemAPI = async (req, res) => {

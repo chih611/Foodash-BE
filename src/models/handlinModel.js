@@ -1,5 +1,3 @@
-const connection = require('../config/database');
-
 const handleGetAllAPI = async (res, rows) => {
     if (rows.length === 0) {
         res.send(`No data found!!!`);
@@ -17,7 +15,7 @@ const handleCreateAPI = async (res) => {
 const handleUpdateAPI = async (res) => {
     res.status(200).json('Updated successfully!');
 }
-const handleDeleteAPI = async (res) => {
+const handleDeleteAPI = async (res, id) => {
     res.status(200).json(`Item ${id} has been deleted successfully!`);
 }
 module.exports = {

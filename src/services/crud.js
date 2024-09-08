@@ -15,13 +15,13 @@ const updateItem = async (itemId, itemName) => {
 }
 
 const getItemById = async (item_id) => {
-    const [ row, field ] = await connection.query(`SELECT * FROM ITEMS WHERE ITEM_NAME = ?;`, [ item_id ]);
-    return row;
+    const [ rows, fields ] = await connection.query(`SELECT * FROM ITEMS WHERE ITEM_NAME = ?;`, [ item_id ]);
+    return rows;
 }
 
 const deleteItembyId = async (item_id) => {
-    const [ row, field ] = await connection.query(`DELETE FROM ITEMS WHERE ITEM_ID = ?;`, [ item_id ]);
-    return row;
+    const [ rows, fields ] = await connection.query(`DELETE FROM ITEMS WHERE ITEM_ID = ?;`, [ item_id ]);
+    return rows;
 }
 module.exports = {
     getAllItems,

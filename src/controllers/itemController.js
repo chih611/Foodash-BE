@@ -4,7 +4,7 @@ const { handleGetAllAPI,
     handleCreateAPI,
     handleUpdateAPI,
     handleDeleteAPI
-} = require('../models/handlinModel');
+} = require('../models/handlingModel');
 
 const getHomePage = (req, res) => {
     return res.render('home');

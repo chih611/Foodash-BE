@@ -8,7 +8,7 @@ const { handleGetAllAPI,
     handleCreateAPI,
     handleUpdateAPI,
     handleDeleteAPI
-} = require('../models/handlinModel');
+} = require('../models/handlingModel');
 
 const getAllInventoryAPI = async (req, res) => {
     const { rows } = await getAllInventories();

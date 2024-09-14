@@ -31,7 +31,7 @@ const updateItemAPI = async (req, res) => {
 const deleteItemAPI = async (req, res) => {
     const { id } = req.params;
     await deleteItembyId(id);
-    await handleDeleteAPI(res);
+    await handleDeleteAPI(res, id);
 }
 
 module.exports = {

@@ -2,7 +2,7 @@ const handleGetAllAPI = async (res, rows) => {
     if (rows.length === 0) {
         res.send(`No data found!!!`);
     } else {
-        res.send(row);
+        res.send(rows);
     }
 }
 

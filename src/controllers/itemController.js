@@ -19,15 +19,15 @@ const getAllItemsAPI = async (req, res) => {
 }
 
 const createItemAPI = async (req, res) => {
-    const { item_name } = req.query;
-    await createItem(item_name);
+    const { item_name, price } = req.query;
+    await createItem(item_name, price);
     await handleCreateAPI(res);
 }
 
 const updateItemAPI = async (req, res) => {
     const { id } = req.params;
-    const { item_name } = req.query;
-    await updateItem(id, item_name);
+    const { item_name, price } = req.query;
+    await updateItem(id, item_name, price);
     await handleUpdateAPI(res);
 }
 

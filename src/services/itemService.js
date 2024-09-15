@@ -5,12 +5,12 @@ const getAllItems = async () => {
     return { rows, fields };
 }
 
-const createItem = async (item_name) => {
-    await connection.query(`INSERT INTO ITEMS (ITEM_NAME) VALUES (?);`, [ item_name ]);
+const createItem = async (item_name, price) => {
+    await connection.query(`INSERT INTO ITEMS (ITEM_NAME) VALUES (?);`, [ item_name, price ]);
 }
 
-const updateItem = async (itemId, itemName) => {
-    await connection.query(`UPDATE ITEMS SET ITEM_NAME = ? WHERE ITEM_ID = ?;`, [ itemName, itemId ]);
+const updateItem = async (itemId, itemName, price) => {
+    await connection.query(`UPDATE ITEMS SET ITEM_NAME = ? WHERE ITEM_ID = ?;`, [ itemName, price, itemId ]);
 }
 
 const getItemById = async (item_id) => {

@@ -2,9 +2,7 @@ const handleGetAllAPI = async (res, rows) => {
     if (rows.length === 0) {
         res.send(`No data found!!!`);
     } else {
-        const formattedOutput = rows.map(row => JSON.stringify(row)).join('\n');
-        res.setHeader('Content-Type', 'application/json');
-        res.send(formattedOutput);
+        res.send(row);
     }
 }
 

@@ -1,5 +1,8 @@
 // const connection = require('../config/database');
-const { getAllItems, createItem, updateItem, deleteItembyId } = require('../services/itemService');
+const { getAllItems,
+    createItem,
+    updateItem,
+    deleteItembyId } = require('../services/itemService');
 const { handleGetAllAPI,
     handleCreateAPI,
     handleUpdateAPI,

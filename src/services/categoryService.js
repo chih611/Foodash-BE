@@ -1,28 +1,26 @@
 const connection = require("../config/database");
 
-const getAllItems = async () => {
-  const [rows, fields] = await connection.query("SELECT * FROM ITEMS");
+const getAllCategories = async () => {
+  const [rows, fields] = await connection.query("SELECT * FROM CATEGORY");
   return { rows, fields };
 };
 
-const createItem = async (item_name, price) => {
-  await connection.query(`INSERT INTO ITEMS (ITEM_NAME) VALUES (?);`, [
-    item_name,
-    price,
+const createCategory = async (category_name) => {
+  await connection.query(`INSERT INTO CATEGORY(CATEGORY_NAME) VALUES (?);`, [
+    category_name,
   ]);
 };
 
 const updateItem = async (itemId, itemName, price) => {
-  await connection.query(`UPDATE ITEMS SET ITEM_NAME = ? WHERE ITEM_ID = ?;`, [
-    itemName,
-    price,
-    itemId,
-  ]);
+  await connection.query(
+    `UPDATE CATEGORY SET ITEM_NAME = ? WHERE ITEM_ID = ?;`,
+    [itemName, price, itemId]
+  );
 };
 
 const getItemById = async (item_id) => {
   const [rows, fields] = await connection.query(
-    `SELECT * FROM ITEMS WHERE ITEM_NAME = ?;`,
+    `SELECT * FROM CATEGORY WHERE ITEM_NAME = ?;`,
     [item_id]
   );
   return rows;
@@ -30,7 +28,7 @@ const getItemById = async (item_id) => {
 
 const getItemByCategory = async (category_name) => {
   const [rows, fields] = await connection.query(
-    `SELECT * FROM ITEMS WHERE CATEGORY_NAME = ?;`,
+    `SELECT * FROM CATEGORY WHERE CATEGORY_NAME = ?;`,
     [category_name]
   );
   return rows;
@@ -38,14 +36,14 @@ const getItemByCategory = async (category_name) => {
 
 const deleteItembyId = async (item_id) => {
   const [rows, fields] = await connection.query(
-    `DELETE FROM ITEMS WHERE ITEM_ID = ?;`,
+    `DELETE FROM CATEGORY WHERE ITEM_ID = ?;`,
     [item_id]
   );
   return rows;
 };
 module.exports = {
-  getAllItems,
-  createItem,
+  getAllCategories,
+  createCategory,
   updateItem,
   getItemById,
   deleteItembyId,

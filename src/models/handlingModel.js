@@ -19,6 +19,6 @@ const handleDeleteAPI = async (res, id) => {
 module.exports = {
   handleGetAllAPI,
   handleCreateAPI,
-  handleUpdateAPI,
+  handleUpdateAPI,   
   handleDeleteAPI,
 };

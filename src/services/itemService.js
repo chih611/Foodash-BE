@@ -29,11 +29,22 @@ const getItemById = async (item_id) => {
 };
 
 const getItemByCategory = async (category_name) => {
-  const [rows, fields] = await connection.query(
-    `SELECT * FROM ITEMS WHERE CATEGORY_NAME = ?;`,
-    [category_name]
-  );
-  return rows;
+  try {
+    const [rows, fields] = await connection.query(
+      `SELECT * FROM ITEMS WHERE CATEGORY_ID = (SELECT CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ?);`,
+      [category_name]
+    );
+
+    // Check if any items are returned
+    if (rows.length === 0) {
+      throw new Error("No items found for the given category");
+    }
+
+    return rows;
+  } catch (error) {
+    console.error(`Error fetching items by category: ${error.message}`);
+    throw error;
+  }
 };
 
 const deleteItembyId = async (item_id) => {

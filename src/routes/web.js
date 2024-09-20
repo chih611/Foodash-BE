@@ -6,6 +6,7 @@ const {
   createItemAPI,
   updateItemAPI,
   deleteItemAPI,
+  getItemByCategoryAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -38,6 +39,7 @@ const router = express.Router();
 
 router.get("/", getHomePage);
 router.get("/item", getAllItemsAPI);
+router.get("/items/category/:categoryName", getItemByCategoryAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/cart", getAllCartsAPI);

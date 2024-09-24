@@ -34,6 +34,7 @@ const {
   getAllCategoriesAPI,
   createCategoryAPI,
 } = require("../controllers/categoryController");
+const { createPaymentAPI } = require("../controllers/paymentController");
 
 const router = express.Router();
 
@@ -50,6 +51,7 @@ router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);
 router.post("/cart/create", createCartAPI);
 router.post("/category/create", createCategoryAPI);
+router.post("/payment/create", createPaymentAPI);
 
 router.put("/item/update/:id", updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);

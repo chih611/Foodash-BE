@@ -16,7 +16,7 @@ const { randomUUID } = require("crypto");
 
 const { paymentsApi } = new Client({
   accessToken: process.env.SQUARE_ACCESS_TOKEN,
-  environment: "sandbox",
+  environment: process.env.SQUARE_ENVIRONMENT,
 });
 
 const createPaymentAPI = async (req, res) => {

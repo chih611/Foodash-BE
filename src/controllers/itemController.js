@@ -5,6 +5,7 @@ const {
   updateItem,
   deleteItembyId,
   getItemByCategory,
+  searchItemByName,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
@@ -56,6 +57,20 @@ const getItemByCategoryAPI = async (req, res) => {
   }
 };
 
+const searchItemByNameAPI = async (req, res) => {
+  const { itemName } = req.params;
+  try {
+    const rows = await searchItemByName(itemName);
+    if (rows.length > 0) {
+      res.status(200).json(rows);
+    } else {
+      res.status(404).json({ message: "No items found for this search" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error searching items by name" });
+  }
+};
+
 module.exports = {
   getHomePage,
   getAllItemsAPI,
@@ -63,4 +78,5 @@ module.exports = {
   updateItemAPI,
   deleteItemAPI,
   getItemByCategoryAPI,
+  searchItemByNameAPI,
 };

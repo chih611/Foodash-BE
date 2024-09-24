@@ -47,6 +47,29 @@ const getItemByCategory = async (category_name) => {
   }
 };
 
+// itemService.js
+const searchItemByName = async (item_name) => {
+  try {
+    // Check if item_name is defined
+    if (!item_name) {
+      throw new Error("Item name is required");
+    }
+
+    // Modify the query to handle case insensitivity, spaces, and potential special characters
+    const [rows, fields] = await connection.query(
+      `SELECT * FROM ITEMS WHERE LOWER(ITEM_NAME) LIKE ?;`,
+      [`%${item_name.toLowerCase().trim()}%`]
+    );
+
+    console.log("Search results:", rows); // Debugging log to check the retrieved data
+
+    return rows;
+  } catch (error) {
+    console.error(`Error searching item by name: ${error.message}`);
+    throw error;
+  }
+};
+
 const deleteItembyId = async (item_id) => {
   const [rows, fields] = await connection.query(
     `DELETE FROM ITEMS WHERE ITEM_ID = ?;`,
@@ -61,4 +84,5 @@ module.exports = {
   getItemById,
   deleteItembyId,
   getItemByCategory,
+  searchItemByName,
 };

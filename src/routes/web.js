@@ -7,6 +7,7 @@ const {
   updateItemAPI,
   deleteItemAPI,
   getItemByCategoryAPI,
+  searchItemByNameAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -41,6 +42,7 @@ const router = express.Router();
 router.get("/", getHomePage);
 router.get("/item", getAllItemsAPI);
 router.get("/items/category/:categoryName", getItemByCategoryAPI);
+router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/cart", getAllCartsAPI);

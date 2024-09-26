@@ -11,18 +11,18 @@ const {
   handleUpdateAPI,
   handleDeleteAPI,
 } = require("../models/handlingModel");
-const { Client } = require("square");
+const { Client, Environment, ApiError } = require("square");
 const { randomUUID } = require("crypto");
+require("dotenv").config();
 
 const { paymentsApi } = new Client({
   accessToken: process.env.SQUARE_ACCESS_TOKEN,
-  environment: process.env.SQUARE_ENVIRONMENT,
+  environment: Environment.Production,
 });
 
 const createPaymentAPI = async (req, res) => {
   try {
     const { sourceId } = req.body;
-    console.log("sourceId", sourceId);
     const { result } = await paymentsApi.createPayment({
       idempotencyKey: randomUUID(),
       sourceId,
@@ -35,7 +35,15 @@ const createPaymentAPI = async (req, res) => {
     // res.status(200).send(JSON.stringify(result));
     console.log(result);
   } catch (error) {
-    console.log(error);
+    if (error instanceof ApiError) {
+      error.result.errors.forEach(function (e) {
+        console.log(e.category);
+        console.log(e.code);
+        console.log(e.detail);
+      });
+    } else {
+      console.log("Unexpected error occurred: ", error);
+    }
   }
 };
 

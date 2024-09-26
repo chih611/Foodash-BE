@@ -8,14 +8,15 @@ const webRoutes = require('./routes/web');
 
 const port = process.env.SERVER_PORT;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 configViewEngine(app);
 
-app.use('/', webRoutes);
+app.use("/", webRoutes);
 
+// Create the HTTP server
 app.listen(port, () => {
-    console.log(`App listening on port ${port}`)
-})
+  console.log(`App listening on port ${port}`);
+});

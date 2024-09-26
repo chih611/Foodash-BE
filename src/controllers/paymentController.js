@@ -1,16 +1,3 @@
-const {
-  getAllInventories,
-  createInventory,
-  updateInventory,
-  deleteInventorybyId,
-} = require("../services/inventoryService");
-
-const {
-  handleGetAllAPI,
-  handleCreateAPI,
-  handleUpdateAPI,
-  handleDeleteAPI,
-} = require("../models/handlingModel");
 const { Client, Environment, ApiError } = require("square");
 const { randomUUID } = require("crypto");
 require("dotenv").config();
@@ -37,9 +24,7 @@ const createPaymentAPI = async (req, res) => {
   } catch (error) {
     if (error instanceof ApiError) {
       error.result.errors.forEach(function (e) {
-        console.log(e.category);
-        console.log(e.code);
-        console.log(e.detail);
+        console.log(e);
       });
     } else {
       console.log("Unexpected error occurred: ", error);

@@ -22,6 +22,9 @@ const {
   createCustomerAPI,
   updateCustomerAPI,
   deleteCustomerAPI,
+  findCustomerByContactAPI,
+  findCustomerByEmailAPI,
+  signInCustomerAPI,
 } = require("../controllers/customerController");
 
 const {
@@ -45,6 +48,10 @@ router.get("/", getHomePage);
 router.get("/item", getAllItemsAPI);
 router.get("/items/category/:categoryName", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
+router.get("/customer", getAllCustomersAPI);
+router.get("/customer/email/:email", findCustomerByEmailAPI);
+router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
+
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/cart", getAllCartsAPI);
@@ -52,19 +59,21 @@ router.get("/category", getAllCategoriesAPI);
 
 router.post("/item/create", createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
-router.post("/customer/create", createCustomerAPI); // Customer create route
+router.post("/customer/create", createCustomerAPI);
+router.post("/customer/signin", signInCustomerAPI);
 router.post("/cart/create", createCartAPI);
 router.post("/category/create", createCategoryAPI);
 router.post("/payment/create", createPaymentAPI);
+router.post("/customer/signin", signInCustomerAPI);
 
 router.put("/item/update/:id", updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);
-router.put("/customer/update/:id", updateCustomerAPI); // Customer update route
+router.put("/customers/update/:id", updateCustomerAPI);
 router.put("/cart/update/:id", updateCartAPI);
 
 router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);
-router.delete("/customer/delete/:id", deleteCustomerAPI); // Customer delete route
+router.delete("/customer/delete/:id", deleteCustomerAPI);
 router.delete("/cart/delete/:id", deleteCartAPI);
 
 module.exports = router;

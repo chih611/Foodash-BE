@@ -1,3 +1,4 @@
+// customerController.js
 const {
   getAllCustomers,
   createCustomer,
@@ -5,19 +6,17 @@ const {
   deleteCustomerById,
   findCustomerByEmail,
   findCustomerByContact,
-  updateGuestToUser,
+  validateCustomerSignIn,
 } = require("../services/customerService");
-const {
-  handleGetAllAPI,
-  handleCreateAPI,
-  handleUpdateAPI,
-  handleDeleteAPI,
-} = require("../models/handlingModel");
 
 // Get all customers
 const getAllCustomersAPI = async (req, res) => {
-  const { rows } = await getAllCustomers();
-  await handleGetAllAPI(res, rows);
+  try {
+    const customers = await getAllCustomers();
+    res.status(200).json(customers);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to retrieve customers." });
+  }
 };
 
 // Create customer API
@@ -30,75 +29,118 @@ const createCustomerAPI = async (req, res) => {
     address,
     password,
     type,
-    dob, // Added dob field
-    gender, // Added gender field
+    dob,
+    gender,
   } = req.body;
 
-  // Determine if the customer type is 'user' or 'guest'
-  const customerType = type === "user" ? "user" : "guest";
-
-  // Check if customer already exists by email (for user) or phone number (for guest)
-  let existingCustomer;
-  if (customerType === "user") {
-    existingCustomer = await findCustomerByEmail(email);
-  } else {
-    existingCustomer = await findCustomerByContact(phoneNumber);
-  }
-
-  // If the customer doesn't exist, create a new one
-  if (!existingCustomer) {
+  try {
     await createCustomer({
       firstName,
       lastName,
       email,
       phoneNumber,
       address,
-      customerType,
-      password: customerType === "user" ? password : null, // Password only for 'user' type
-      dob, // Include dob
-      gender, // Include gender
+      customerType: type === "user" ? "user" : "guest",
+      password: type === "user" ? password : null,
+      dob,
+      gender,
     });
-    await handleCreateAPI(res);
-  } else {
-    // If the existing customer is a guest and now trying to sign up as a user
-    if (existingCustomer.CUSTOMER_TYPE === "guest" && customerType === "user") {
-      // Update the existing guest record to become a registered user
-      await updateGuestToUser(existingCustomer.CUSTOMER_ID, {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        address,
-        password,
-        dob, // Include dob when updating guest to user
-        gender, // Include gender when updating guest to user
-      });
-      res.status(200).json({
-        message: "Guest record updated to a registered user successfully.",
-        customer: { ...existingCustomer, CUSTOMER_TYPE: "user" },
-      });
+    res.status(201).json({ message: "Customer created successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to create customer." });
+  }
+};
+
+// Find customer by email API
+const findCustomerByEmailAPI = async (req, res) => {
+  const { email } = req.params;
+  try {
+    const customer = await findCustomerByEmail(email);
+    if (customer) {
+      res.status(200).json(customer);
     } else {
-      // If the customer is already a user or duplicate email attempt
-      res
-        .status(409)
-        .json({ message: "Customer with this email already exists." });
+      res.status(404).json({ message: "Customer not found" });
     }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to retrieve customer by email." });
+  }
+};
+
+// Find customer by contact API
+const findCustomerByContactAPI = async (req, res) => {
+  const { phoneNumber } = req.params;
+  try {
+    const customer = await findCustomerByContact(phoneNumber);
+    if (customer) {
+      res.status(200).json(customer);
+    } else {
+      res.status(404).json({ message: "Customer not found" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to retrieve customer by contact." });
+  }
+};
+
+// Sign in customer API
+const signInCustomerAPI = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const customer = await validateCustomerSignIn(email, password);
+    if (customer) {
+      res.status(200).json({ message: "Sign-in successful", customer });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to sign in customer." });
   }
 };
 
 // Update customer API
 const updateCustomerAPI = async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName } = req.body;
-  await updateCustomer(firstName, lastName, id);
-  await handleUpdateAPI(res);
+  const {
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    address,
+    password,
+    customerType,
+    dob,
+    gender,
+  } = req.body;
+
+  try {
+    await updateCustomer({
+      customerId: id,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+      password,
+      customerType,
+      dob,
+      gender,
+    });
+    res.status(200).json({ message: "Customer updated successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update customer." });
+  }
 };
 
 // Delete customer API
 const deleteCustomerAPI = async (req, res) => {
   const { id } = req.params;
-  await deleteCustomerById(id);
-  await handleDeleteAPI(res, id);
+  try {
+    await deleteCustomerById(id);
+    res.status(200).json({ message: "Customer deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete customer." });
+  }
 };
 
 module.exports = {
@@ -106,4 +148,7 @@ module.exports = {
   createCustomerAPI,
   updateCustomerAPI,
   deleteCustomerAPI,
+  findCustomerByEmailAPI,
+  findCustomerByContactAPI,
+  signInCustomerAPI,
 };

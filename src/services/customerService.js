@@ -1,12 +1,12 @@
+// customerService.js
 const connection = require("../config/database");
 
 // Get all customers
 const getAllCustomers = async () => {
-  const [rows, fields] = await connection.query("SELECT * FROM CUSTOMER");
-  return { rows, fields };
+  const [rows] = await connection.query("SELECT * FROM CUSTOMER");
+  return rows;
 };
 
-// Create a new customer
 // Create a new customer
 const createCustomer = async ({
   firstName,
@@ -31,7 +31,7 @@ const createCustomer = async ({
     phoneNumber,
     address,
     customerType,
-    password, // This will be 'null' for guests
+    password,
     dob,
     gender,
   ];
@@ -39,61 +39,57 @@ const createCustomer = async ({
   await connection.query(sql, values);
 };
 
-// Update existing customer to change from guest to user
-// Update existing customer to change from guest to user
-const updateGuestToUser = async (
+// Update customer details (handles both general updates and guest-to-user upgrades)
+const updateCustomer = async ({
   customerId,
-  { firstName, lastName, email, phoneNumber, address, password, dob, gender }
-) => {
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  address,
+  password,
+  customerType,
+  dob,
+  gender,
+}) => {
   const sql = `
-      UPDATE CUSTOMER 
-      SET FIRST_NAME = ?, 
-          LAST_NAME = ?, 
-          EMAIL = ?, 
-          PHONE_NUMBER = ?, 
-          ADDRESS = ?, 
-          CUSTOMER_TYPE = 'user', 
-          PASSWORD = ?,
-          DATE_OF_BIRTH = ?,  -- Include dob in the update
-          GENDER = ?          -- Include gender in the update
-      WHERE CUSTOMER_ID = ?
-    `;
-
+    UPDATE CUSTOMER 
+    SET 
+      FIRST_NAME = ?, 
+      LAST_NAME = ?, 
+      EMAIL = ?, 
+      PHONE_NUMBER = ?, 
+      ADDRESS = ?, 
+      PASSWORD = ?, 
+      DATE_OF_BIRTH = ?, 
+      GENDER = ?, 
+      CUSTOMER_TYPE = ?
+    WHERE CUSTOMER_ID = ?;
+  `;
   const values = [
     firstName,
     lastName,
     email,
     phoneNumber,
     address,
-    password,
+    password || null,
     dob,
     gender,
+    customerType || "guest",
     customerId,
   ];
 
   await connection.query(sql, values);
 };
 
-// Update customer details
-const updateCustomer = async (firstName, lastName, customerId) => {
-  await connection.query(
-    `UPDATE CUSTOMER
-SET FIRST_NAME=?, LAST_NAME=?
-WHERE CUSTOMER_ID=?;`,
-    [firstName, lastName, customerId]
-  );
-};
-
 // Delete a customer by ID
 const deleteCustomerById = async (customerId) => {
-  const [rows, fields] = await connection.query(
-    `DELETE FROM CUSTOMER WHERE CUSTOMER_ID=?;`,
-    [customerId]
-  );
-  return rows;
+  await connection.query(`DELETE FROM CUSTOMER WHERE CUSTOMER_ID=?;`, [
+    customerId,
+  ]);
 };
 
-// Find customer by email (for 'user' type)
+// Find customer by email
 const findCustomerByEmail = async (email) => {
   const [rows] = await connection.query(
     "SELECT * FROM CUSTOMER WHERE EMAIL = ?",
@@ -102,11 +98,20 @@ const findCustomerByEmail = async (email) => {
   return rows.length > 0 ? rows[0] : null;
 };
 
-// Find customer by phone number (for 'guest' type)
+// Find customer by phone number
 const findCustomerByContact = async (phoneNumber) => {
   const [rows] = await connection.query(
     "SELECT * FROM CUSTOMER WHERE PHONE_NUMBER = ?",
     [phoneNumber]
+  );
+  return rows.length > 0 ? rows[0] : null;
+};
+
+// Validate customer sign-in
+const validateCustomerSignIn = async (email, password) => {
+  const [rows] = await connection.query(
+    "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND PASSWORD = ?",
+    [email, password]
   );
   return rows.length > 0 ? rows[0] : null;
 };
@@ -118,5 +123,5 @@ module.exports = {
   deleteCustomerById,
   findCustomerByEmail,
   findCustomerByContact,
-  updateGuestToUser, // Export the new function
+  validateCustomerSignIn,
 };

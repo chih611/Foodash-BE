@@ -79,7 +79,18 @@ const updateCustomer = async ({
     customerId,
   ];
 
-  await connection.query(sql, values);
+  try {
+    const [result] = await connection.query(sql, values);
+    console.log(result); // Log the result to check if any rows were affected
+    if (result.affectedRows === 0) {
+      throw new Error(
+        "No rows were updated. Please check the customer ID or input data."
+      );
+    }
+  } catch (error) {
+    console.error("Update failed:", error.message);
+    throw error;
+  }
 };
 
 // Delete a customer by ID

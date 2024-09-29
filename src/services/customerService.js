@@ -7,6 +7,14 @@ const getAllCustomers = async () => {
   return rows;
 };
 
+const findCustomerById = async (customerId) => {
+  const [rows] = await connection.query(
+    "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ?",
+    [customerId]
+  );
+  return rows.length > 0 ? rows[0] : null;
+};
+
 // Create a new customer
 const createCustomer = async ({
   firstName,
@@ -14,18 +22,22 @@ const createCustomer = async ({
   email,
   phoneNumber,
   address,
-  postcode,
-  state,
-  city,
   customerType,
   password,
   dob,
   gender,
+  abn,
+  dietaryPreference,
+  loyaltyPoints = 0, // Default to 0 if not provided
+  favourites,
+  postcode,
+  state,
+  city,
 }) => {
   const sql = `
       INSERT INTO CUSTOMER 
-      (FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, POSTCODE, STATE, CITY, CUSTOMER_TYPE, PASSWORD, DATE_OF_BIRTH, GENDER) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, CUSTOMER_TYPE, PASSWORD, DATE_OF_BIRTH, GENDER, ABN, DIETARY_PREFERENCE, LOYALTY_POINTS, FAVOURITES, POSTCODE, STATE, CITY) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
   const values = [
     firstName,
@@ -33,13 +45,17 @@ const createCustomer = async ({
     email,
     phoneNumber,
     address,
-    postcode,
-    state,
-    city,
     customerType,
     password,
     dob,
     gender,
+    abn,
+    dietaryPreference,
+    loyaltyPoints,
+    JSON.stringify(favourites), // Convert JSON data to string
+    postcode,
+    state,
+    city,
   ];
 
   await connection.query(sql, values);
@@ -53,13 +69,17 @@ const updateCustomer = async ({
   email,
   phoneNumber,
   address,
-  postcode,
-  state,
-  city,
   password,
   customerType,
   dob,
   gender,
+  abn,
+  dietaryPreference,
+  loyaltyPoints,
+  favourites,
+  postcode,
+  state,
+  city,
 }) => {
   const sql = `
     UPDATE CUSTOMER 
@@ -69,13 +89,17 @@ const updateCustomer = async ({
       EMAIL = ?, 
       PHONE_NUMBER = ?, 
       ADDRESS = ?, 
-      POSTCODE = ?, 
-      STATE = ?, 
-      CITY = ?,
       PASSWORD = ?, 
       DATE_OF_BIRTH = ?, 
       GENDER = ?, 
-      CUSTOMER_TYPE = ?
+      CUSTOMER_TYPE = ?,
+      ABN = ?,
+      DIETARY_PREFERENCE = ?,
+      LOYALTY_POINTS = ?,
+      FAVOURITES = ?,
+      POSTCODE = ?,
+      STATE = ?,
+      CITY = ?
     WHERE CUSTOMER_ID = ?;
   `;
   const values = [
@@ -84,19 +108,22 @@ const updateCustomer = async ({
     email,
     phoneNumber,
     address,
-    postcode,
-    state,
-    city,
     password || null,
     dob,
     gender,
     customerType || "guest",
+    abn,
+    dietaryPreference,
+    loyaltyPoints,
+    JSON.stringify(favourites),
+    postcode,
+    state,
+    city,
     customerId,
   ];
 
   try {
     const [result] = await connection.query(sql, values);
-    console.log(result); // Log the result to check if any rows were affected
     if (result.affectedRows === 0) {
       throw new Error(
         "No rows were updated. Please check the customer ID or input data."
@@ -144,6 +171,7 @@ const validateCustomerSignIn = async (email, password) => {
 
 module.exports = {
   getAllCustomers,
+  findCustomerById,
   createCustomer,
   updateCustomer,
   deleteCustomerById,

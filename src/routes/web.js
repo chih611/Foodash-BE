@@ -20,6 +20,7 @@ const {
 const {
   getAllCustomersAPI,
   createCustomerAPI,
+  findCustomerByIdAPI,
   updateCustomerAPI,
   deleteCustomerAPI,
   findCustomerByContactAPI,
@@ -51,6 +52,7 @@ router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
+router.get("/customer/:id", findCustomerByIdAPI);
 
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);

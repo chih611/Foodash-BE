@@ -6,6 +6,7 @@ const {
   deleteCustomerById,
   findCustomerByEmail,
   findCustomerByContact,
+  findCustomerById,
   validateCustomerSignIn,
 } = require("../services/customerService");
 
@@ -16,6 +17,20 @@ const getAllCustomersAPI = async (req, res) => {
     res.status(200).json(customers);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve customers." });
+  }
+};
+
+const findCustomerByIdAPI = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const customer = await findCustomerById(id);
+    if (customer) {
+      res.status(200).json(customer);
+    } else {
+      res.status(404).json({ message: "Customer not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to retrieve customer by ID." });
   }
 };
 
@@ -34,6 +49,10 @@ const createCustomerAPI = async (req, res) => {
     type,
     dob,
     gender,
+    abn,
+    dietaryPreference,
+    loyaltyPoints,
+    favourites,
   } = req.body;
 
   try {
@@ -50,6 +69,10 @@ const createCustomerAPI = async (req, res) => {
       password: type === "user" ? password : null,
       dob,
       gender,
+      abn,
+      dietaryPreference,
+      loyaltyPoints,
+      favourites,
     });
     res.status(201).json({ message: "Customer created successfully." });
   } catch (error) {
@@ -107,37 +130,18 @@ const signInCustomerAPI = async (req, res) => {
 // Update customer API
 const updateCustomerAPI = async (req, res) => {
   const { id } = req.params;
-  const {
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    address,
-    password,
-    customerType,
-    dob,
-    gender,
-  } = req.body;
+  const updatedData = req.body;
 
   try {
-    await updateCustomer({
-      customerId: id,
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      address,
-      password,
-      customerType,
-      dob,
-      gender,
+    await updateCustomer({ customerId: id, ...updatedData });
+    res.status(200).json({
+      message: "Customer updated successfully.",
+      customer: updatedData,
     });
-    res.status(200).json({ message: "Customer updated successfully." });
   } catch (error) {
     res.status(500).json({ message: "Failed to update customer." });
   }
 };
-
 // Delete customer API
 const deleteCustomerAPI = async (req, res) => {
   const { id } = req.params;
@@ -151,6 +155,7 @@ const deleteCustomerAPI = async (req, res) => {
 
 module.exports = {
   getAllCustomersAPI,
+  findCustomerByIdAPI,
   createCustomerAPI,
   updateCustomerAPI,
   deleteCustomerAPI,

@@ -14,6 +14,9 @@ const createCustomer = async ({
   email,
   phoneNumber,
   address,
+  postcode,
+  state,
+  city,
   customerType,
   password,
   dob,
@@ -21,8 +24,8 @@ const createCustomer = async ({
 }) => {
   const sql = `
       INSERT INTO CUSTOMER 
-      (FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, CUSTOMER_TYPE, PASSWORD, DATE_OF_BIRTH, GENDER) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, POSTCODE, STATE, CITY, CUSTOMER_TYPE, PASSWORD, DATE_OF_BIRTH, GENDER) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
   const values = [
     firstName,
@@ -30,6 +33,9 @@ const createCustomer = async ({
     email,
     phoneNumber,
     address,
+    postcode,
+    state,
+    city,
     customerType,
     password,
     dob,
@@ -47,6 +53,9 @@ const updateCustomer = async ({
   email,
   phoneNumber,
   address,
+  postcode,
+  state,
+  city,
   password,
   customerType,
   dob,
@@ -60,6 +69,9 @@ const updateCustomer = async ({
       EMAIL = ?, 
       PHONE_NUMBER = ?, 
       ADDRESS = ?, 
+      POSTCODE = ?, 
+      STATE = ?, 
+      CITY = ?,
       PASSWORD = ?, 
       DATE_OF_BIRTH = ?, 
       GENDER = ?, 
@@ -72,6 +84,9 @@ const updateCustomer = async ({
     email,
     phoneNumber,
     address,
+    postcode,
+    state,
+    city,
     password || null,
     dob,
     gender,

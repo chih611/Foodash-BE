@@ -1,35 +1,68 @@
-const connection = require('../config/database');
+const connection = require("../config/database");
 
+// Retrieve all carts
 const getAllCarts = async () => {
-    const [ rows, fields ] = await connection.query('SELECT * FROM CART');
-    return { rows, fields };
-}
+  const [rows] = await connection.query("SELECT * FROM CART");
+  return rows;
+};
 
-const createCart = async (item_id, customer_id) => {
-    await connection.query(`INSERT INTO foodash.CART
-(ITEM_ID, CUSTOMER_ID)
-VALUES(?,?);`, [ item_id, customer_id ]);
-}
+// Create a new cart
+const createCart = async ({
+  customerId,
+  cartItems,
+  cartStatus = "pending",
+  cartTotal,
+}) => {
+  const sql = `
+        INSERT INTO CART (CUSTOMER_ID, CART_ITEMS, CART_STATUS, CART_TOTAL) 
+        VALUES (?, ?, ?, ?);
+    `;
+  const values = [
+    customerId,
+    JSON.stringify(cartItems), // Convert the cart items to JSON string
+    cartStatus,
+    cartTotal,
+  ];
 
-const updateCart = async (item_id, customer_id, cart_id) => {
-    await connection.query(`UPDATE foodash.CART
-SET ITEM_ID=?, CUSTOMER_ID=?
-WHERE CART_ID=?;`, [ item_id, customer_id, cart_id ]);
-}
+  await connection.query(sql, values);
+};
 
-// const getItemById = async (item_id) => {
-//     const [ rows, fields ] = await connection.query(`SELECT * FROM ITEMS WHERE ITEM_NAME = ?;`, [ item_id ]);
-//     return rows;
-// }
+// Update existing cart
+const updateCart = async ({
+  cartId,
+  customerId,
+  cartItems,
+  cartStatus,
+  cartTotal,
+}) => {
+  const sql = `
+        UPDATE CART 
+        SET 
+            CUSTOMER_ID = ?, 
+            CART_ITEMS = ?, 
+            CART_STATUS = ?, 
+            CART_TOTAL = ? 
+        WHERE CART_ID = ?;
+    `;
+  const values = [
+    customerId,
+    JSON.stringify(cartItems), // Convert the cart items to JSON string
+    cartStatus,
+    cartTotal,
+    cartId,
+  ];
 
-const deleteCartById = async (cart_id) => {
-    const [ rows, fields ] = await connection.query(`DELETE FROM foodash.CART
-WHERE CART_ID=?;`, [ cart_id ]);
-    return rows;
-}
+  await connection.query(sql, values);
+};
+
+// Delete a cart by ID
+const deleteCartById = async (cartId) => {
+  await connection.query(`DELETE FROM CART WHERE CART_ID=?;`, [cartId]);
+};
+
 module.exports = {
-    getAllCarts,
-    createCart,
-    updateCart,
-    deleteCartById
-}
+  getAllCarts,
+  createCart,
+  updateCart,
+  deleteCartById,
+};

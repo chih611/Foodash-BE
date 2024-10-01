@@ -1,5 +1,6 @@
 const {
   getAllCarts,
+  getCartByCustomerId,
   createCart,
   updateCart,
   deleteCartById,
@@ -36,6 +37,21 @@ const createCartAPI = async (req, res) => {
   } catch (error) {
     console.error("Error creating cart:", error);
     res.status(500).json({ message: "Failed to create cart" });
+  }
+};
+
+const getCartByCustomerIdAPI = async (req, res) => {
+  const { customerId } = req.params;
+  try {
+    const cart = await getCartByCustomerId(customerId);
+    if (cart) {
+      res.status(200).json(cart);
+    } else {
+      res.status(404).json({ message: "Cart not found" });
+    }
+  } catch (error) {
+    console.error("Error retrieving cart by customer ID:", error);
+    res.status(500).json({ message: "Failed to retrieve cart" });
   }
 };
 
@@ -77,6 +93,7 @@ const deleteCartAPI = async (req, res) => {
 
 module.exports = {
   getAllCartsAPI,
+  getCartByCustomerIdAPI,
   createCartAPI,
   updateCartAPI,
   deleteCartAPI,

@@ -30,6 +30,7 @@ const {
 
 const {
   getAllCartsAPI,
+  getCartByCustomerIdAPI,
   createCartAPI,
   updateCartAPI,
   deleteCartAPI,
@@ -57,6 +58,7 @@ router.get("/customer/:id", findCustomerByIdAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/cart", getAllCartsAPI);
+router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
 
 router.post("/item/create", createItemAPI);

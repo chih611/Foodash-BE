@@ -6,6 +6,14 @@ const getAllCarts = async () => {
   return rows;
 };
 
+const getCartByCustomerId = async (customerId) => {
+  const [rows] = await connection.query(
+    "SELECT * FROM CART WHERE CUSTOMER_ID = ?;",
+    [customerId]
+  );
+  return rows.length > 0 ? rows[0] : null;
+};
+
 // Create a new cart
 const createCart = async ({
   customerId,
@@ -62,6 +70,7 @@ const deleteCartById = async (cartId) => {
 
 module.exports = {
   getAllCarts,
+  getCartByCustomerId,
   createCart,
   updateCart,
   deleteCartById,

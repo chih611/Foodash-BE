@@ -59,7 +59,7 @@ const updateCartAPI = async (req, res) => {
   const { id } = req.params;
   const { customerId, cartItems, cartStatus, cartTotal } = req.body;
 
-  if (!Array.isArray(cartItems) || !customerId || !cartTotal) {
+  if (!Array.isArray(cartItems) || !customerId) {
     return res
       .status(400)
       .json({ message: "Invalid input data for cart update" });

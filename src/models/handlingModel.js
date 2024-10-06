@@ -1,8 +1,8 @@
-const handleGetAllAPI = async (res, rows) => {
+const handleGetAllAPI = async (res, rows, fields) => {
   if (rows.length === 0) {
     res.send(`No data found!!!`);
   } else {
-    res.send(rows);
+    res.send({ rows: rows, fields: fields });
   }
 };
 
@@ -19,6 +19,6 @@ const handleDeleteAPI = async (res, id) => {
 module.exports = {
   handleGetAllAPI,
   handleCreateAPI,
-  handleUpdateAPI,   
+  handleUpdateAPI,
   handleDeleteAPI,
 };

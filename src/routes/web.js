@@ -42,6 +42,10 @@ const {
 } = require("../controllers/categoryController");
 
 const { createPaymentAPI } = require("../controllers/paymentController");
+const {
+  getAllOrdersAPI,
+  getAllOrderDetailsAPI,
+} = require("../controllers/orderControllers");
 
 const router = express.Router();
 
@@ -54,7 +58,8 @@ router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
 router.get("/customer/:id", findCustomerByIdAPI);
-
+router.get("/order", getAllOrdersAPI);
+router.get("/order_details/:orderId", getAllOrderDetailsAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/cart", getAllCartsAPI);

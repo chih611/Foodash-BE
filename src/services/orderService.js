@@ -9,8 +9,7 @@ FROM foodash.ORDER_VIEW;`);
 
 const getAllOrderDetails = async (orderId) => {
   const [rows, fields] = await connection.query(
-    `SELECT ORDER_ID, ITEM_ID, ITEM_NAME, PICTURE, DESCRIPTION, QUANTITY, UNIT_PRICE, TOTAL
-FROM foodash.ORDER_DETAIL_VIEW WHERE ORDER_ID=?;`,
+    `SELECT ORDER_ID, ITEM_ID, ITEM_NAME, PICTURE, DESCRIPTION, QUANTITY, UNIT_PRICE, TOTAL FROM foodash.ORDER_DETAIL_VIEW WHERE ORDER_ID=?;`,
     [orderId]
   );
   return { rows, fields };

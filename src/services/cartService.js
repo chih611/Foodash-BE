@@ -22,7 +22,7 @@ const createCart = async ({
   cartTotal,
 }) => {
   const sql = `
-        INSERT INTO CART (CUSTOMER_ID, CART_ITEMS, CART_STATUS, CART_TOTAL) 
+        INSERT INTO CART (CUSTOMER_ID, CART_ITEMS, NOTES, CART_TOTAL) 
         VALUES (?, ?, ?, ?);
     `;
   const values = [
@@ -48,8 +48,9 @@ const updateCart = async ({
         SET 
             CUSTOMER_ID = ?, 
             CART_ITEMS = ?, 
-            CART_STATUS = ?, 
+            NOTES = ?,
             CART_TOTAL = ? 
+            
         WHERE CART_ID = ?;
     `;
   const values = [

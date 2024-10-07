@@ -18,7 +18,7 @@ const getAllCartsAPI = async (req, res) => {
 };
 
 const createCartAPI = async (req, res) => {
-  const { customerId, cartItems, cartStatus, cartTotal } = req.body;
+  const { customerId, cartItems, notes, cartTotal } = req.body;
 
   if (!Array.isArray(cartItems) || !customerId || !cartTotal) {
     return res
@@ -30,7 +30,7 @@ const createCartAPI = async (req, res) => {
     await createCart({
       customerId,
       cartItems,
-      cartStatus: cartStatus || "pending",
+      notes,
       cartTotal,
     });
     await handleCreateAPI(res);
@@ -57,7 +57,7 @@ const getCartByCustomerIdAPI = async (req, res) => {
 
 const updateCartAPI = async (req, res) => {
   const { id } = req.params;
-  const { customerId, cartItems, cartStatus, cartTotal } = req.body;
+  const { customerId, cartItems, notes, cartTotal } = req.body;
 
   if (!Array.isArray(cartItems) || !customerId) {
     return res
@@ -70,7 +70,7 @@ const updateCartAPI = async (req, res) => {
       cartId: id,
       customerId,
       cartItems,
-      cartStatus: cartStatus || "pending",
+      notes,
       cartTotal,
     });
     await handleUpdateAPI(res);

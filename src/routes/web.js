@@ -44,7 +44,8 @@ const {
 const { createPaymentAPI } = require("../controllers/paymentController");
 const {
   getAllOrdersAPI,
-  getAllOrderDetailsAPI,
+  findOrderDetailByOrderIdAPI,
+  findOrderByOrderIdAPI,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -59,7 +60,8 @@ router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
 router.get("/customer/:id", findCustomerByIdAPI);
 router.get("/order", getAllOrdersAPI);
-router.get("/order_details/:orderId", getAllOrderDetailsAPI);
+router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
+router.get("/order/:orderId", findOrderByOrderIdAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/cart", getAllCartsAPI);

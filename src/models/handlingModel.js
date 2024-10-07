@@ -1,11 +1,10 @@
-const handleGetAllAPI = async (res, rows, fields) => {
+const handleGetAllAPI = async (res, rows) => {
   if (rows.length === 0) {
     res.send(`No data found!!!`);
   } else {
     res.send(rows);
   }
 };
-
 const handleCreateAPI = async (res) => {
   res.status(200).json("Created successfully!");
 };

@@ -1,6 +1,7 @@
 const {
   getAllorders,
-  getAllOrderDetails,
+  findOrderDetailByOrderId,
+  findOrderByOrderId,
 } = require("../services/orderService");
 const {
   handleGetAllAPI,
@@ -10,17 +11,24 @@ const {
 } = require("../models/handlingModel");
 
 const getAllOrdersAPI = async (req, res) => {
-  const { rows, fields } = await getAllorders();
-  await handleGetAllAPI(res, rows, fields);
+  const { rows } = await getAllorders();
+  await handleGetAllAPI(res, rows);
 };
 
-const getAllOrderDetailsAPI = async (req, res) => {
+const findOrderDetailByOrderIdAPI = async (req, res) => {
   const { orderId } = req.params;
-  const { rows, fields } = await getAllOrderDetails(orderId);
-  await handleGetAllAPI(res, rows, fields);
+  const { rows } = await findOrderDetailByOrderId(orderId);
+  await handleGetAllAPI(res, rows);
+};
+
+const findOrderByOrderIdAPI = async (req, res) => {
+  const { orderId } = req.params;
+  const { rows } = await findOrderByOrderId(orderId);
+  await handleGetAllAPI(res, rows);
 };
 
 module.exports = {
   getAllOrdersAPI,
-  getAllOrderDetailsAPI,
+  findOrderDetailByOrderIdAPI,
+  findOrderByOrderIdAPI,
 };

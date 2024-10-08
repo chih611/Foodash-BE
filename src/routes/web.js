@@ -46,6 +46,10 @@ const {
   getAllOrdersAPI,
   findOrderDetailByOrderIdAPI,
   findOrderByOrderIdAPI,
+  updateStatusOrderbyIdAPI,
+  findOrderByCustomerNameAPI,
+  createOrderAPI,
+  createOrderDetailAPI,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -59,14 +63,15 @@ router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
 router.get("/customer/:id", findCustomerByIdAPI);
+router.get("/customer", getAllCustomersAPI);
 router.get("/order", getAllOrdersAPI);
 router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
 router.get("/order/:orderId", findOrderByOrderIdAPI);
-router.get("/inventory", getAllInventoryAPI);
-router.get("/customer", getAllCustomersAPI);
+router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
 router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
+router.get("/inventory", getAllInventoryAPI);
 
 router.post("/item/create", createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
@@ -75,12 +80,14 @@ router.post("/customer/signin", signInCustomerAPI);
 router.post("/cart/create", createCartAPI);
 router.post("/category/create", createCategoryAPI);
 router.post("/payment/create", createPaymentAPI);
-router.post("/customer/signin", signInCustomerAPI);
+router.post("/order/create", createOrderAPI);
+router.post("/order_detail/create", createOrderDetailAPI);
 
 router.put("/item/update/:id", updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);
 router.put("/customers/update/:id", updateCustomerAPI);
 router.put("/cart/update/:id", updateCartAPI);
+router.put("/order/update/:orderId", updateStatusOrderbyIdAPI);
 
 router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);

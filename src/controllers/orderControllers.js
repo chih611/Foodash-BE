@@ -40,7 +40,6 @@ const findOrderByCustomerNameAPI = async (req, res) => {
 const updateStatusOrderbyIdAPI = async (req, res) => {
   const { orderId } = req.params;
   const { status } = req.body;
-  // console.log(req.body);
   const { rows } = await updateStatusOrderbyId(status, orderId);
   await handleUpdateAPI(res, rows);
 };
@@ -68,7 +67,6 @@ const createOrderAPI = async (req, res) => {
     NOTES,
     STATUS,
   } = req.body;
-  console.log(req.body);
   const { rows } = await createOrder(
     CUSTOMER_ID,
     DUEDATE,
@@ -97,7 +95,6 @@ const createOrderAPI = async (req, res) => {
 const createOrderDetailAPI = async (req, res) => {
   const { ORDER_ID, UNIT_PRICE, TOTAL, QUANTITY, LABEL_ID, NOTES, ITEM_ID } =
     req.body;
-  console.log(req.body);
   const { rows } = await createOrderDetail(
     ORDER_ID,
     UNIT_PRICE,

@@ -89,6 +89,14 @@ const createOrder = async (
   return { rows };
 };
 
+const deleteOrderById = async (id) => {
+  const [rows] = await connection.query(
+    "DELETE FROM foodash.ORDERS WHERE ORDER_ID=?;",
+    [id]
+  );
+  return rows;
+};
+
 const createOrderDetail = async (
   ORDER_ID,
   UNIT_PRICE,
@@ -113,4 +121,5 @@ module.exports = {
   findOrderByCustomerName,
   createOrder,
   createOrderDetail,
+  deleteOrderById,
 };

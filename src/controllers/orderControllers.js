@@ -6,6 +6,7 @@ const {
   findOrderByCustomerName,
   createOrder,
   createOrderDetail,
+  deleteOrderById,
 } = require("../services/orderService");
 const {
   handleGetAllAPI,
@@ -107,6 +108,11 @@ const createOrderDetailAPI = async (req, res) => {
   await handleCreateAPI(res, rows);
 };
 
+const deleteOrderByIdAPI = async (req, res) => {
+  const { id } = req.params;
+  await deleteOrderById(id);
+  await handleDeleteAPI(res, id);
+};
 
 module.exports = {
   getAllOrdersAPI,
@@ -116,4 +122,5 @@ module.exports = {
   findOrderByCustomerNameAPI,
   createOrderAPI,
   createOrderDetailAPI,
+  deleteOrderByIdAPI,
 };

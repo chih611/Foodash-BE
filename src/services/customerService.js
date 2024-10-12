@@ -58,7 +58,9 @@ const createCustomer = async ({
     city,
   ];
 
-  await connection.query(sql, values);
+  // Insert customer and return the new customer ID
+  const [result] = await connection.query(sql, values);
+  return result.insertId; // Return the new customer ID after insertion
 };
 
 // Update customer details (handles both general updates and guest-to-user upgrades)

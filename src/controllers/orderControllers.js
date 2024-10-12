@@ -68,29 +68,35 @@ const createOrderAPI = async (req, res) => {
     NOTES,
     STATUS,
   } = req.body;
-  const { rows } = await createOrder(
-    CUSTOMER_ID,
-    DUEDATE,
-    RECIPIENT,
-    ADDRESS,
-    PHONE,
-    EMAIL,
-    DELIVER,
-    PAYMENT,
-    TAXES,
-    DELIVERY_FEE,
-    SERVICE_FEE,
-    UTENSIL,
-    GIFTWRAP,
-    PROMO,
-    SUBTOTAL,
-    ORDER_ITEM_ID,
-    CREATED_DATE,
-    TOTAL,
-    NOTES,
-    STATUS
-  );
-  await handleCreateAPI(res, rows);
+  try {
+    const { rows } = await createOrder(
+      CUSTOMER_ID,
+      DUEDATE,
+      RECIPIENT,
+      ADDRESS,
+      PHONE,
+      EMAIL,
+      DELIVER,
+      PAYMENT,
+      TAXES,
+      DELIVERY_FEE,
+      SERVICE_FEE,
+      UTENSIL,
+      GIFTWRAP,
+      PROMO,
+      SUBTOTAL,
+      ORDER_ITEM_ID,
+      CREATED_DATE,
+      TOTAL,
+      NOTES,
+      STATUS
+    );
+    const orderId = rows.insertId;
+    await res.status(201).json({ ORDER_ID: orderId });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).json({ message: "Error creating order" });
+  }
 };
 
 const createOrderDetailAPI = async (req, res) => {

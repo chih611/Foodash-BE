@@ -56,7 +56,7 @@ const createCustomerAPI = async (req, res) => {
   } = req.body;
 
   try {
-    await createCustomer({
+    const customerId = await createCustomer({
       firstName,
       lastName,
       email,
@@ -74,7 +74,9 @@ const createCustomerAPI = async (req, res) => {
       loyaltyPoints,
       favourites,
     });
-    res.status(201).json({ message: "Customer created successfully." });
+    res
+      .status(201)
+      .json({ message: "Customer created successfully.", customerId });
   } catch (error) {
     res.status(500).json({ message: "Failed to create customer." });
   }

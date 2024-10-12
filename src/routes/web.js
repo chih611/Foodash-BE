@@ -50,7 +50,6 @@ const {
   findOrderByCustomerNameAPI,
   createOrderAPI,
   createOrderDetailAPI,
-  deleteOrderByIdAPI,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -94,6 +93,5 @@ router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);
 router.delete("/customer/delete/:id", deleteCustomerAPI);
 router.delete("/cart/delete/:id", deleteCartAPI);
-router.delete("/order/delete/:id", deleteOrderByIdAPI);
 
 module.exports = router;

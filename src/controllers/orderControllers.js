@@ -108,12 +108,6 @@ const createOrderDetailAPI = async (req, res) => {
   await handleCreateAPI(res, rows);
 };
 
-const deleteOrderByIdAPI = async (req, res) => {
-  const { id } = req.params;
-  await deleteOrderById(id);
-  await handleDeleteAPI(res, id);
-};
-
 module.exports = {
   getAllOrdersAPI,
   findOrderDetailByOrderIdAPI,
@@ -122,5 +116,4 @@ module.exports = {
   findOrderByCustomerNameAPI,
   createOrderAPI,
   createOrderDetailAPI,
-  deleteOrderByIdAPI,
 };

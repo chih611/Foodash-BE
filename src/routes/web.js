@@ -8,6 +8,7 @@ const {
   updateItemAPI,
   deleteItemAPI,
   getItemByCategoryAPI,
+  getModificationByIdAPI,
   searchItemByNameAPI,
 } = require("../controllers/itemController");
 
@@ -61,6 +62,7 @@ router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
 router.get("/items/category/:categoryName", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
+router.get("/items/modification/:id", getModificationByIdAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);

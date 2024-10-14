@@ -77,6 +77,14 @@ const deleteItembyId = async (item_id) => {
   );
   return rows;
 };
+
+const getModificationById = async (item_id) => {
+  const [rows, fields] = await connection.query(
+    `SELECT * FROM ITEM_MODIFICATION WHERE ITEM_ID = ?;`,
+    [item_id]
+  );
+  return rows;
+};
 module.exports = {
   getAllItems,
   createItem,
@@ -84,5 +92,6 @@ module.exports = {
   getItemById,
   deleteItembyId,
   getItemByCategory,
+  getModificationById,
   searchItemByName,
 };

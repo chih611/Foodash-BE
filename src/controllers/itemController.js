@@ -6,6 +6,7 @@ const {
   deleteItembyId,
   getItemByCategory,
   searchItemByName,
+  getModificationById,
   getItemById,
 } = require("../services/itemService");
 const {
@@ -14,6 +15,7 @@ const {
   handleUpdateAPI,
   handleDeleteAPI,
 } = require("../models/handlingModel");
+const { get } = require("../routes/web");
 // const { get } = require("../routes/web");
 
 const getHomePage = (req, res) => {
@@ -68,6 +70,16 @@ const getItemByCategoryAPI = async (req, res) => {
   }
 };
 
+const getModificationByIdAPI = async (req, res) => {
+  const { id } = req.params;
+  const rows = await getModificationById(id);
+  if (rows.length > 0) {
+    res.status(200).json(rows);
+  } else {
+    res.status(404).json({ message: "No items found" });
+  }
+};
+
 const searchItemByNameAPI = async (req, res) => {
   const { itemName } = req.params;
   try {
@@ -90,5 +102,6 @@ module.exports = {
   deleteItemAPI,
   getItemByIdAPI,
   getItemByCategoryAPI,
+  getModificationByIdAPI,
   searchItemByNameAPI,
 };

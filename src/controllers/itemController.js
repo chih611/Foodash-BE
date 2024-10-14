@@ -6,6 +6,7 @@ const {
   deleteItembyId,
   getItemByCategory,
   searchItemByName,
+  getItemById,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
@@ -22,6 +23,16 @@ const getHomePage = (req, res) => {
 const getAllItemsAPI = async (req, res) => {
   const { rows } = await getAllItems();
   await handleGetAllAPI(res, rows);
+};
+
+const getItemByIdAPI = async (req, res) => {
+  const { id } = req.params;
+  const rows = await getItemById(id);
+  if (rows.length > 0) {
+    res.status(200).json(rows);
+  } else {
+    res.status(404).json({ message: "No items found" });
+  }
 };
 
 const createItemAPI = async (req, res) => {
@@ -77,6 +88,7 @@ module.exports = {
   createItemAPI,
   updateItemAPI,
   deleteItemAPI,
+  getItemByIdAPI,
   getItemByCategoryAPI,
   searchItemByNameAPI,
 };

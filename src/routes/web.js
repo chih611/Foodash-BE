@@ -3,6 +3,7 @@ const express = require("express");
 const {
   getHomePage,
   getAllItemsAPI,
+  getItemByIdAPI,
   createItemAPI,
   updateItemAPI,
   deleteItemAPI,
@@ -57,6 +58,7 @@ const router = express.Router();
 // Define the routes as per requirements
 router.get("/", getHomePage);
 router.get("/item", getAllItemsAPI);
+router.get("/item/:id", getItemByIdAPI);
 router.get("/items/category/:categoryName", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/customer", getAllCustomersAPI);

@@ -15,8 +15,6 @@ const {
   handleUpdateAPI,
   handleDeleteAPI,
 } = require("../models/handlingModel");
-const { get } = require("../routes/web");
-// const { get } = require("../routes/web");
 
 const getHomePage = (req, res) => {
   return res.render("home");

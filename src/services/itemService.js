@@ -85,6 +85,11 @@ const getModificationById = async (item_id) => {
   );
   return rows;
 };
+
+const getAllLabels = async () => {
+  const [rows, fields] = await connection.query("SELECT * FROM LABELS");
+  return { rows, fields };
+};
 module.exports = {
   getAllItems,
   createItem,
@@ -94,4 +99,5 @@ module.exports = {
   getItemByCategory,
   getModificationById,
   searchItemByName,
+  getAllLabels,
 };

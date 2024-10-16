@@ -100,8 +100,16 @@ const createOrderAPI = async (req, res) => {
 };
 
 const createOrderDetailAPI = async (req, res) => {
-  const { ORDER_ID, UNIT_PRICE, TOTAL, QUANTITY, LABEL_ID, NOTES, ITEM_ID } =
-    req.body;
+  const {
+    ORDER_ID,
+    UNIT_PRICE,
+    TOTAL,
+    QUANTITY,
+    LABEL_ID,
+    NOTES,
+    ITEM_ID,
+    MODIFICATION,
+  } = req.body;
   const { rows } = await createOrderDetail(
     ORDER_ID,
     UNIT_PRICE,
@@ -109,7 +117,8 @@ const createOrderDetailAPI = async (req, res) => {
     QUANTITY,
     LABEL_ID,
     NOTES,
-    ITEM_ID
+    ITEM_ID,
+    MODIFICATION
   );
   await handleCreateAPI(res, rows);
 };

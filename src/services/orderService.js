@@ -96,11 +96,21 @@ const createOrderDetail = async (
   QUANTITY,
   LABEL_ID,
   NOTES,
-  ITEM_ID
+  ITEM_ID,
+  MODIFICATION
 ) => {
   const [rows] = await connection.query(
-    "INSERT INTO foodash.ORDER_ITEM (ORDER_ID, UNIT_PRICE, TOTAL, QUANTITY, LABEL_ID, NOTES, ITEM_ID) VALUES(?, ?, ?, ?, ?, ?, ?);",
-    [ORDER_ID, UNIT_PRICE, TOTAL, QUANTITY, LABEL_ID, NOTES, ITEM_ID]
+    "INSERT INTO foodash.ORDER_ITEM (ORDER_ID, UNIT_PRICE, TOTAL, QUANTITY, LABEL_ID, NOTES, ITEM_ID, MODIFICATION) VALUES(?, ?, ?, ?, ?, ?, ?, ?);",
+    [
+      ORDER_ID,
+      UNIT_PRICE,
+      TOTAL,
+      QUANTITY,
+      LABEL_ID,
+      NOTES,
+      ITEM_ID,
+      JSON.stringify(MODIFICATION),
+    ]
   );
   return { rows };
 };

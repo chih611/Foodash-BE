@@ -8,6 +8,7 @@ const {
   searchItemByName,
   getModificationById,
   getItemById,
+  getAllLabels,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
@@ -94,6 +95,11 @@ const searchItemByNameAPI = async (req, res) => {
   }
 };
 
+const getAllLabelsAPI = async (req, res) => {
+  const { rows } = await getAllLabels();
+  await handleGetAllAPI(res, rows);
+};
+
 module.exports = {
   getHomePage,
   getAllItemsAPI,
@@ -104,4 +110,5 @@ module.exports = {
   getItemByCategoryAPI,
   getModificationByIdAPI,
   searchItemByNameAPI,
+  getAllLabelsAPI,
 };

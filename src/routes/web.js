@@ -10,6 +10,7 @@ const {
   getItemByCategoryAPI,
   getModificationByIdAPI,
   searchItemByNameAPI,
+  getAllLabelsAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -62,6 +63,7 @@ router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
 router.get("/items/category/:categoryName", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
+router.get("/items/labels", getAllLabelsAPI);
 router.get("/items/modification/:id", getModificationByIdAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);

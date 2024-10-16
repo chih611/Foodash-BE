@@ -11,7 +11,12 @@ const port = process.env.SERVER_PORT;
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://your-s3-bucket-url.s3.amazonaws.com", // Replace with your S3 bucket URL
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 configViewEngine(app);
 
 app.use("/", webRoutes);

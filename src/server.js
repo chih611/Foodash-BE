@@ -12,11 +12,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  cors({
-    origin: "http://foodash.s3-website-ap-southeast-2.amazonaws.com", // Replace with your S3 bucket URL
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
-  })
+  // cors({
+  //   origin: "http://foodash.s3-website-ap-southeast-2.amazonaws.com", // Replace with your S3 bucket URL
+  //   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  //   allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  // })
+  cors()
 );
 configViewEngine(app);
 

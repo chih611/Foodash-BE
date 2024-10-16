@@ -15,6 +15,7 @@ app.use(
   cors({
     origin: "http://foodash.s3-website-ap-southeast-2.amazonaws.com", // Replace with your S3 bucket URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   })
 );
 configViewEngine(app);

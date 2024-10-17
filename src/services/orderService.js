@@ -7,6 +7,14 @@ const getAllorders = async () => {
   return { rows };
 };
 
+const getOrderByCustomerId = async (customerId) => {
+  const [rows] = await connection.query(
+    "SELECT * FROM foodash.ORDERS WHERE CUSTOMER_ID=?;",
+    [customerId]
+  );
+  return { rows };
+};
+
 const findOrderDetailByOrderId = async (orderId) => {
   const [rows] = await connection.query(
     `SELECT * FROM foodash.ORDER_DETAIL_VIEW WHERE ID=?;`,
@@ -123,4 +131,5 @@ module.exports = {
   findOrderByCustomerName,
   createOrder,
   createOrderDetail,
+  getOrderByCustomerId,
 };

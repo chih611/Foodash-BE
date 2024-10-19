@@ -7,6 +7,7 @@ const {
   createOrder,
   createOrderDetail,
   getOrderByCustomerId,
+  findOrderByDuedate,
 } = require("../services/orderService");
 const {
   handleGetAllAPI,
@@ -41,6 +42,12 @@ const findOrderByOrderIdAPI = async (req, res) => {
 const findOrderByCustomerNameAPI = async (req, res) => {
   const { full_name } = req.params;
   const { rows } = await findOrderByCustomerName(full_name);
+  await handleGetAllAPI(res, rows);
+};
+
+const findOrderByDuedateAPI = async (req, res) => {
+  const { duedate } = req.params;
+  const { rows } = await findOrderByDuedate(duedate);
   await handleGetAllAPI(res, rows);
 };
 
@@ -138,4 +145,5 @@ module.exports = {
   createOrderAPI,
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
+  findOrderByDuedateAPI,
 };

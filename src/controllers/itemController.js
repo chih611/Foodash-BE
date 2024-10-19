@@ -56,16 +56,12 @@ const deleteItemAPI = async (req, res) => {
 };
 
 const getItemByCategoryAPI = async (req, res) => {
-  const { categoryName } = req.params; // Extract categoryName from URL params
   try {
-    const rows = await getItemByCategory(categoryName);
-    if (rows.length > 0) {
-      res.status(200).json(rows);
-    } else {
-      res.status(404).json({ message: "No items found for this category" });
-    }
+    const categoryId = req.params.categoryId;
+    const items = await getItemByCategory(categoryId);
+    res.status(200).json(items);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching items by category" });
+    res.status(500).json({ message: error.message });
   }
 };
 

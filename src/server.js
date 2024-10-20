@@ -6,7 +6,7 @@ const app = express();
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 8080;
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());

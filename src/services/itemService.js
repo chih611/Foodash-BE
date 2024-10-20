@@ -28,15 +28,16 @@ const getItemById = async (item_id) => {
   return rows;
 };
 
-const getItemByCategory = async (category_name) => {
+const getItemByCategory = async (category_id) => {
   try {
+    console.log(`Fetching items for category ID: ${category_id}`);
     const [rows, fields] = await connection.query(
-      `SELECT * FROM ITEMS WHERE CATEGORY_ID = (SELECT CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ?);`,
-      [category_name]
+      `SELECT * FROM ITEMS WHERE CATEGORY_ID = ?`,
+      [category_id]
     );
 
-    // Check if any items are returned
     if (rows.length === 0) {
+      console.log(`No items found for category ID: ${category_id}`);
       throw new Error("No items found for the given category");
     }
 

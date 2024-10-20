@@ -26,14 +26,6 @@ const getItemById = async (item_id) => {
   return rows;
 };
 
-const getItemByCategory = async (category_name) => {
-  const [rows, fields] = await connection.query(
-    `SELECT * FROM CATEGORY WHERE CATEGORY_NAME = ?;`,
-    [category_name]
-  );
-  return rows;
-};
-
 const deleteItembyId = async (item_id) => {
   const [rows, fields] = await connection.query(
     `DELETE FROM CATEGORY WHERE ITEM_ID = ?;`,
@@ -47,5 +39,4 @@ module.exports = {
   updateItem,
   getItemById,
   deleteItembyId,
-  getItemByCategory,
 };

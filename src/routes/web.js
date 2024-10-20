@@ -64,7 +64,7 @@ const router = express.Router();
 router.get("/", getHomePage);
 router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
-router.get("/items/category/:categoryName", getItemByCategoryAPI);
+router.get("/items/category/:categoryId", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/items/labels", getAllLabelsAPI);
 router.get("/items/modification/:id", getModificationByIdAPI);

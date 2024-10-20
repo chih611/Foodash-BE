@@ -55,6 +55,7 @@ const {
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
   findOrderByDuedateAPI,
+  getAllOrdersByTodayAPI,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -78,11 +79,12 @@ router.get("/order/:orderId", findOrderByOrderIdAPI);
 router.get("/order/duedate/:duedate", findOrderByDuedateAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
 router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
+router.get("/orders_today", getAllOrdersByTodayAPI);
+
 router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
-router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
 
 router.post("/item/create", createItemAPI);
 router.post("/inventory/create", createInventoryAPI);

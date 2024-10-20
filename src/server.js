@@ -17,6 +17,6 @@ configViewEngine(app);
 app.use("/", webRoutes);
 
 // Create the HTTP server
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

@@ -7,6 +7,13 @@ const getAllorders = async () => {
   return { rows };
 };
 
+const getAllordersByToday = async () => {
+  const [rows] = await connection.query(
+    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() ORDER BY `Create Date` DESC LIMIT 4;"
+  );
+  return { rows };
+};
+
 const getOrderByCustomerId = async (customerId) => {
   const [rows] = await connection.query(
     "SELECT * FROM foodash.ORDERS WHERE CUSTOMER_ID=?;",
@@ -133,6 +140,7 @@ const createOrderDetail = async (
 
 module.exports = {
   getAllorders,
+  getAllordersByToday,
   findOrderDetailByOrderId,
   findOrderByOrderId,
   updateStatusOrderbyId,

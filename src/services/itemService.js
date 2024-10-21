@@ -28,6 +28,15 @@ const getItemById = async (item_id) => {
   return rows;
 };
 
+const getAllIngredients = async () => {
+  const [rows, fields] = await connection.query(
+    "SELECT INGREDIENTS FROM ITEM_MODIFICATION"
+  );
+
+  // Return all ingredients as they are from the database
+  return rows;
+};
+
 const getItemByCategory = async (category_id) => {
   try {
     console.log(`Fetching items for category ID: ${category_id}`);
@@ -101,4 +110,5 @@ module.exports = {
   getModificationById,
   searchItemByName,
   getAllLabels,
+  getAllIngredients,
 };

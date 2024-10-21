@@ -9,6 +9,7 @@ const {
   getModificationById,
   getItemById,
   getAllLabels,
+  getAllIngredients,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
@@ -94,6 +95,16 @@ const getAllLabelsAPI = async (req, res) => {
   await handleGetAllAPI(res, rows);
 };
 
+const getAllIngredientsAPI = async (req, res) => {
+  try {
+    const ingredients = await getAllIngredients();
+    res.status(200).json(ingredients);
+  } catch (error) {
+    console.error(`Error fetching ingredients: ${error.message}`);
+    res.status(500).json({ message: "Error fetching ingredients" });
+  }
+};
+
 module.exports = {
   getHomePage,
   getAllItemsAPI,
@@ -105,4 +116,5 @@ module.exports = {
   getModificationByIdAPI,
   searchItemByNameAPI,
   getAllLabelsAPI,
+  getAllIngredientsAPI,
 };

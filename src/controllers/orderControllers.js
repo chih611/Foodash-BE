@@ -117,11 +117,6 @@ const updateOrderByIdAPI = async (req, res) => {
     res.status(500).json({ message: "Error updating order" });
   }
 };
-const findOrderByDuedateAPI = async (req, res) => {
-  const { duedate } = req.params;
-  const { rows } = await findOrderByDuedate(duedate);
-  await handleGetAllAPI(res, rows);
-};
 
 const updateStatusOrderbyIdAPI = async (req, res) => {
   const { orderId } = req.params;
@@ -218,6 +213,5 @@ module.exports = {
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
   updateOrderByIdAPI,
-  findOrderByDuedateAPI,
   getAllOrdersByTodayAPI,
 };

@@ -55,7 +55,6 @@ const {
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
   updateOrderByIdAPI,
-  findOrderByDuedateAPI,
   getAllOrdersByTodayAPI,
 } = require("../controllers/orderControllers");
 const {
@@ -80,7 +79,6 @@ router.get("/customer", getAllCustomersAPI);
 router.get("/order", getAllOrdersAPI);
 router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
 router.get("/order/:orderId", findOrderByOrderIdAPI);
-router.get("/order/duedate/:duedate", findOrderByDuedateAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
 router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
 router.get("/orders_today", getAllOrdersByTodayAPI);

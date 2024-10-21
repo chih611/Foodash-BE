@@ -15,6 +15,69 @@ const getOrderByCustomerId = async (customerId) => {
   return { rows };
 };
 
+const updateOrderById = async (
+  orderId,
+  CUSTOMER_ID,
+  DUEDATE,
+  RECIPIENT,
+  ADDRESS,
+  PHONE,
+  EMAIL,
+  DELIVER,
+  PAYMENT,
+  TAXES,
+  DELIVERY_FEE,
+  SERVICE_FEE,
+  UTENSIL,
+  GIFTWRAP,
+  PROMO,
+  SUBTOTAL,
+  ORDER_ITEM_ID,
+  CREATED_DATE,
+  TOTAL,
+  NOTES,
+  STATUS,
+  RECURRING,
+  UPDATED,
+  FEEDBACK
+) => {
+  const [rows] = await connection.query(
+    `UPDATE foodash.ORDERS 
+     SET CUSTOMER_ID = ?, DUEDATE = ?, RECIPIENT = ?, ADDRESS = ?, PHONE = ?, EMAIL = ?, DELIVER = ?, PAYMENT = ?, TAXES = ?, 
+         DELIVERY_FEE = ?, SERVICE_FEE = ?, UTENSIL = ?, GIFTWRAP = ?, PROMO = ?, SUBTOTAL = ?, ORDER_ITEM_ID = ?, CREATED_DATE = ?, 
+         TOTAL = ?, NOTES = ?, STATUS = ?, RECURRING = ?, UPDATED = ?, FEEDBACK = ?
+     WHERE ORDER_ID = ?;`,
+    [
+      CUSTOMER_ID,
+      DUEDATE,
+      RECIPIENT,
+      ADDRESS,
+      PHONE,
+      EMAIL,
+      DELIVER,
+      PAYMENT,
+      TAXES,
+      DELIVERY_FEE,
+      SERVICE_FEE,
+      UTENSIL,
+      GIFTWRAP,
+      PROMO,
+      SUBTOTAL,
+      ORDER_ITEM_ID,
+      CREATED_DATE,
+      TOTAL,
+      NOTES,
+      STATUS,
+      RECURRING,
+      UPDATED,
+      JSON.stringify(FEEDBACK), // Convert JSON data to string if provided
+      orderId,
+    ]
+  );
+
+  return { rows };
+};
+
 const findOrderDetailByOrderId = async (orderId) => {
   const [rows] = await connection.query(
     `SELECT * FROM foodash.ORDER_DETAIL_VIEW WHERE ID=?;`,
@@ -132,4 +195,5 @@ module.exports = {
   createOrder,
   createOrderDetail,
   getOrderByCustomerId,
+  updateOrderById,
 };

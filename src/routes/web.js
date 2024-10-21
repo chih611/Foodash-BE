@@ -54,6 +54,7 @@ const {
   createOrderAPI,
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
+  updateOrderByIdAPI,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -96,6 +97,7 @@ router.put("/inventory/update/:id", updateInventoryAPI);
 router.put("/customers/update/:id", updateCustomerAPI);
 router.put("/cart/update/:id", updateCartAPI);
 router.put("/order/update/:orderId", updateStatusOrderbyIdAPI);
+router.put("/order/update_details/:orderId", updateOrderByIdAPI);
 
 router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);

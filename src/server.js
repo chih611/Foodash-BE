@@ -8,7 +8,7 @@ const webRoutes = require('./routes/web');
 
 const port = process.env.SERVER_PORT || 8080;
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "src", "views"));
+app.set("views", path.join(__dirname, "../src/views"));
 
 // app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());

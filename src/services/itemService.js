@@ -80,6 +80,13 @@ const searchItemByName = async (item_name) => {
   }
 };
 
+const getAllModifications = async () => {
+  const [rows, fields] = await connection.query(
+    "SELECT * FROM ITEM_MODIFICATION"
+  );
+  return { rows, fields };
+};
+
 const deleteItembyId = async (item_id) => {
   const [rows, fields] = await connection.query(
     `DELETE FROM ITEMS WHERE ITEM_ID = ?;`,
@@ -111,4 +118,5 @@ module.exports = {
   searchItemByName,
   getAllLabels,
   getAllIngredients,
+  getAllModifications,
 };

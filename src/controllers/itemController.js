@@ -106,7 +106,6 @@ const getAllIngredientsAPI = async (req, res) => {
 };
 
 module.exports = {
-  getHomePage,
   getAllItemsAPI,
   createItemAPI,
   updateItemAPI,

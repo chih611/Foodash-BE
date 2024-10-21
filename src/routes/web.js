@@ -57,6 +57,9 @@ const {
   findOrderByDuedateAPI,
   getAllOrdersByTodayAPI,
 } = require("../controllers/orderControllers");
+const {
+  getAllNotificationsAPI,
+} = require("../controllers/notificationController");
 
 const router = express.Router();
 
@@ -80,6 +83,8 @@ router.get("/order/duedate/:duedate", findOrderByDuedateAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
 router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
 router.get("/orders_today", getAllOrdersByTodayAPI);
+router.get("/notification", getAllNotificationsAPI);
+
 
 router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);

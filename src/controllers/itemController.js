@@ -18,9 +18,9 @@ const {
   handleDeleteAPI,
 } = require("../models/handlingModel");
 
-const getHomePage = (req, res) => {
-  return res.render("home");
-};
+// const getHomePage = (req, res) => {
+//   return res.render("home");
+// };
 
 const getAllItemsAPI = async (req, res) => {
   const { rows } = await getAllItems();

@@ -8,6 +8,8 @@ const {
   createOrderDetail,
   getOrderByCustomerId,
   updateOrderById,
+  findOrderByDuedate,
+  getAllordersByToday,
 } = require("../services/orderService");
 const {
   handleGetAllAPI,
@@ -18,6 +20,11 @@ const {
 
 const getAllOrdersAPI = async (req, res) => {
   const { rows } = await getAllorders();
+  await handleGetAllAPI(res, rows);
+};
+
+const getAllOrdersByTodayAPI = async (req, res) => {
+  const { rows } = await getAllordersByToday();
   await handleGetAllAPI(res, rows);
 };
 
@@ -109,6 +116,11 @@ const updateOrderByIdAPI = async (req, res) => {
     console.error("Error updating order:", error);
     res.status(500).json({ message: "Error updating order" });
   }
+};
+const findOrderByDuedateAPI = async (req, res) => {
+  const { duedate } = req.params;
+  const { rows } = await findOrderByDuedate(duedate);
+  await handleGetAllAPI(res, rows);
 };
 
 const updateStatusOrderbyIdAPI = async (req, res) => {
@@ -206,4 +218,6 @@ module.exports = {
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
   updateOrderByIdAPI,
+  findOrderByDuedateAPI,
+  getAllOrdersByTodayAPI,
 };

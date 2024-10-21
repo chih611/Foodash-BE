@@ -7,6 +7,13 @@ const getAllorders = async () => {
   return { rows };
 };
 
+const getAllordersByToday = async () => {
+  const [rows] = await connection.query(
+    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() ORDER BY `Create Date` DESC LIMIT 4;"
+  );
+  return { rows };
+};
+
 const getOrderByCustomerId = async (customerId) => {
   const [rows] = await connection.query(
     "SELECT * FROM foodash.ORDERS WHERE CUSTOMER_ID=?;",
@@ -102,6 +109,14 @@ const findOrderByCustomerName = async (full_name) => {
   return { rows };
 };
 
+const findOrderByDuedate = async (duedate) => {
+  const [rows] = await connection.query(
+    "SELECT ID, `Full Name`, Duedate, Recipient, Address, Phone, Email, Deliver, Payment, Taxes, `Delivery Fee`, `Service Fee`, UTENSIL, Giftwrap, Promotion, Subtotal, `Create Date`, Total, Status FROM foodash.ORDER_VIEW WHERE Duedate = ?;",
+    [duedate]
+  );
+  return { rows };
+};
+
 const updateStatusOrderbyId = async (status, orderId) => {
   const [rows] = await connection.query(
     `UPDATE foodash.ORDER_VIEW SET Status=? WHERE ID=?;`,
@@ -188,6 +203,7 @@ const createOrderDetail = async (
 
 module.exports = {
   getAllorders,
+  getAllordersByToday,
   findOrderDetailByOrderId,
   findOrderByOrderId,
   updateStatusOrderbyId,
@@ -196,4 +212,5 @@ module.exports = {
   createOrderDetail,
   getOrderByCustomerId,
   updateOrderById,
+  findOrderByDuedate,
 };

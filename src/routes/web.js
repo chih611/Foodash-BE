@@ -55,6 +55,8 @@ const {
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
   updateOrderByIdAPI,
+  findOrderByDuedateAPI,
+  getAllOrdersByTodayAPI,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -63,7 +65,7 @@ const router = express.Router();
 router.get("/", getHomePage);
 router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
-router.get("/items/category/:categoryName", getItemByCategoryAPI);
+router.get("/items/category/:categoryId", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/items/labels", getAllLabelsAPI);
 router.get("/items/modification/:id", getModificationByIdAPI);
@@ -75,13 +77,16 @@ router.get("/customer", getAllCustomersAPI);
 router.get("/order", getAllOrdersAPI);
 router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
 router.get("/order/:orderId", findOrderByOrderIdAPI);
+router.get("/order/duedate/:duedate", findOrderByDuedateAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
 router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
+router.get("/orders_today", getAllOrdersByTodayAPI);
+
 router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
-router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
+
 router.post("/item/create", createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);

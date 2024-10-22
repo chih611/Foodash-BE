@@ -11,6 +11,7 @@ const {
   searchItemByNameAPI,
   getAllLabelsAPI,
   getAllIngredientsAPI,
+  getAllModificationsAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -76,6 +77,7 @@ router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/items/labels", getAllLabelsAPI);
 router.get("/items/ingredients", getAllIngredientsAPI);
 router.get("/items/modification/:id", getModificationByIdAPI);
+router.get("/items/modifications", getAllModificationsAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);

@@ -62,6 +62,7 @@ const {
 } = require("../controllers/notificationController");
 const {
   getAllCurrentCategorySalesAPI,
+  getSalesSumByMonthAPI,
 } = require("../controllers/reportController");
 
 const router = express.Router();
@@ -91,6 +92,7 @@ router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
+router.get("/sales_by_month", getSalesSumByMonthAPI);
 
 router.post("/item/create", createItemAPI);
 router.post("/inventory/create", createInventoryAPI);

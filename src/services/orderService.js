@@ -9,7 +9,7 @@ const getAllorders = async () => {
 
 const getAllordersByToday = async () => {
   const [rows] = await connection.query(
-    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() ORDER BY `Create Date` DESC LIMIT 4;"
+    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() OR (`Duedate`) = CURDATE();"
   );
   return { rows };
 };

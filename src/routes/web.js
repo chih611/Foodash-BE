@@ -95,7 +95,7 @@ router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
-router.get("/sales_by_month", getSalesSumByMonthAPI);
+router.get("/sales_by_month/:month", getSalesSumByMonthAPI);
 router.get("/sales_reports", getSaleRportsAPI);
 
 router.post("/item/create", createItemAPI);

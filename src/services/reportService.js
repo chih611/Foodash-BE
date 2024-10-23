@@ -7,9 +7,10 @@ const getAllCurrentCategorySales = async () => {
   return { rows };
 };
 
-const getSalesSumByMonth = async () => {
+const getSalesSumByMonth = async (month) => {
   const [rows] = await connection.query(
-    "SELECT Items, `Product Sales`, Tax, Discount, `Gross Sales`, `Net Sales`, Month FROM foodash.Report_summary_byMonth WHERE Report_summary_byMonth.`Month` = MONTH(CURRENT_DATE());"
+    "SELECT Items, `Product Sales`, Tax, Discount, `Gross Sales`, `Net Sales`, Month FROM foodash.Report_summary_byMonth WHERE Report_summary_byMonth.`Month` = ?;",
+    [month]
   );
   return { rows };
 };

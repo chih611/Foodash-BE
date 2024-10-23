@@ -32,23 +32,82 @@ const getItemByIdAPI = async (req, res) => {
   const { id } = req.params;
   const rows = await getItemById(id);
   if (rows.length > 0) {
-    res.status(200).json(rows);
+    const item = rows[0];
+    if (item.PICTURE) {
+      // Convert Buffer to Base64
+      const base64Image = item.PICTURE.toString("base64");
+      // Create a URL for the image
+      item.PICTURE = `data:image/png;base64,${base64Image}`;
+    } else {
+      item.PICTURE = null; // Or a default image URL
+    }
+    res.status(200).json(item);
   } else {
     res.status(404).json({ message: "No items found" });
   }
 };
 
 const createItemAPI = async (req, res) => {
-  const { item_name, price } = req.query;
-  await createItem(item_name, price);
-  await handleCreateAPI(res);
+  const {
+    item_name,
+    quantity,
+    unit_price,
+    category_id,
+    description,
+    expiry_date,
+    special_status,
+  } = req.body;
+  const picture = req.file ? req.file.path : null;
+  try {
+    await createItem(
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      picture,
+      description,
+      expiry_date,
+      special_status
+    );
+    res.status(201).json({ message: "Item created successfully." });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error creating item.", error: error.message });
+  }
 };
 
+// Revised updateItemAPI to handle all attributes and image upload
 const updateItemAPI = async (req, res) => {
   const { id } = req.params;
-  const { item_name, price } = req.query;
-  await updateItem(id, item_name, price);
-  await handleUpdateAPI(res);
+  const {
+    item_name,
+    quantity,
+    unit_price,
+    category_id,
+    description,
+    expiry_date,
+    special_status,
+  } = req.body;
+  const picture = req.file ? req.file.path : null;
+  try {
+    await updateItem(
+      id,
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      picture,
+      description,
+      expiry_date,
+      special_status
+    );
+    res.status(200).json({ message: "Item updated successfully." });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating item.", error: error.message });
+  }
 };
 
 const deleteItemAPI = async (req, res) => {

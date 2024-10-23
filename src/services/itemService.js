@@ -5,17 +5,58 @@ const getAllItems = async () => {
   return { rows, fields };
 };
 
-const createItem = async (item_name, price) => {
-  await connection.query(`INSERT INTO ITEMS (ITEM_NAME) VALUES (?);`, [
+const createItem = async (
+  item_name,
+  quantity,
+  unit_price,
+  category_id,
+  picture,
+  description,
+  expiry_date,
+  special_status
+) => {
+  const query = `
+    INSERT INTO ITEMS (ITEM_NAME, QUANTITY, UNIT_PRICE, CATEGORY_ID, PICTURE, DESCRIPTION, EXPIRY_DATE, SPECIAL_STATUS) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  await connection.query(query, [
     item_name,
-    price,
+    quantity,
+    unit_price,
+    category_id,
+    picture,
+    description,
+    expiry_date,
+    special_status,
   ]);
 };
 
-const updateItem = async (itemId, itemName, price) => {
-  await connection.query(`UPDATE ITEMS SET ITEM_NAME = ? WHERE ITEM_ID = ?;`, [
-    itemName,
-    price,
+// Revised updateItem to include all attributes and image upload
+const updateItem = async (
+  itemId,
+  item_name,
+  quantity,
+  unit_price,
+  category_id,
+  picture,
+  description,
+  expiry_date,
+  special_status
+) => {
+  const query = `
+    UPDATE ITEMS 
+    SET ITEM_NAME = ?, QUANTITY = ?, UNIT_PRICE = ?, CATEGORY_ID = ?, PICTURE = ?, DESCRIPTION = ?, EXPIRY_DATE = ?, SPECIAL_STATUS = ?
+    WHERE ITEM_ID = ?
+  `;
+  await connection.query(query, [
+    item_name,
+    quantity,
+    unit_price,
+    category_id,
+    picture,
+    description,
+    expiry_date,
+    special_status,
     itemId,
   ]);
 };

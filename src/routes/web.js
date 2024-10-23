@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = require("../config/multerConfig");
 
 const {
   getAllItemsAPI,
@@ -73,6 +74,7 @@ const router = express.Router();
 // Define the routes as per requirements
 router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
+
 router.get("/items/category/:categoryId", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/items/labels", getAllLabelsAPI);
@@ -99,7 +101,7 @@ router.get("/inventory", getAllInventoryAPI);
 router.get("/sales_by_month", getSalesSumByMonthAPI);
 router.get("/sales_reports", getSaleRportsAPI);
 
-router.post("/item/create", createItemAPI);
+router.post("/item/create", upload.single("picture"), createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);
 router.post("/customer/signin", signInCustomerAPI);
@@ -109,7 +111,8 @@ router.post("/payment/create", createPaymentAPI);
 router.post("/order/create", createOrderAPI);
 router.post("/order_detail/create", createOrderDetailAPI);
 
-router.put("/item/update/:id", updateItemAPI);
+// router.put("/item/update/:id", updateItemAPI);
+router.put("/item/update/:id", upload.single("picture"), updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);
 router.put("/customers/update/:id", updateCustomerAPI);
 router.put("/cart/update/:id", updateCartAPI);

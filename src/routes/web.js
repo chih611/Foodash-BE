@@ -69,6 +69,13 @@ const {
   getSaleRportsAPI,
 } = require("../controllers/reportController");
 
+const {
+  getAllAdminAPI,
+  getAdminByIdAPI,
+  createAdminAPI,
+  updateAdminAPI,
+} = require("../controllers/adminController");
+
 const router = express.Router();
 
 // Define the routes as per requirements
@@ -100,6 +107,8 @@ router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/sales_by_month", getSalesSumByMonthAPI);
 router.get("/sales_reports", getSaleRportsAPI);
+router.get("/admin", getAllAdminAPI);
+router.get("/admin/:id", getAdminByIdAPI);
 
 router.post("/item/create", upload.single("picture"), createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
@@ -110,6 +119,7 @@ router.post("/category/create", createCategoryAPI);
 router.post("/payment/create", createPaymentAPI);
 router.post("/order/create", createOrderAPI);
 router.post("/order_detail/create", createOrderDetailAPI);
+router.post("/admin/create", createAdminAPI);
 
 // router.put("/item/update/:id", updateItemAPI);
 router.put("/item/update/:id", upload.single("picture"), updateItemAPI);
@@ -119,6 +129,7 @@ router.put("/cart/update/:id", updateCartAPI);
 router.put("/order/update/:orderId", updateStatusOrderbyIdAPI);
 router.put("/order/update_details/:orderId", updateOrderByIdAPI);
 router.put("/order/update_view/:orderId", updateOrderViewByIdAPI);
+router.put("/admin/update/:id", updateAdminAPI);
 
 router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);

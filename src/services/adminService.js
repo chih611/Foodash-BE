@@ -2,7 +2,9 @@ const connection = require("../config/database");
 
 // Get all customers
 const getAllAdmin = async () => {
-  const [rows] = await connection.query("SELECT * FROM ADMIN");
+  const [rows] = await connection.query(
+    "SELECT ADMIN_ID, ADMIN_NAME, ADMIN_EMAIL, ADMIN_TYPE FROM ADMIN"
+  );
   return rows;
 };
 

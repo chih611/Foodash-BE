@@ -20,6 +20,9 @@ configViewEngine(app);
 
 app.use("/", webRoutes);
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.static("uploads"));
+
 // Create the HTTP server
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

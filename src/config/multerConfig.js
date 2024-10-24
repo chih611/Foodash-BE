@@ -1,23 +1,9 @@
 const multer = require("multer");
-const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const { entityType } = req.params;
-    let folder = "uploads/";
-    switch (entityType) {
-      case "items":
-        folder += "items/";
-        break;
-      case "categories":
-        folder += "categories/";
-        break;
-      case "customers":
-        folder += "customers/";
-        break;
-      default:
-        folder += "others/";
-    }
+    // Ensure that all item images are stored in '/uploads/items'
+    let folder = "uploads/items/";
     cb(null, folder);
   },
   filename: (req, file, cb) => {

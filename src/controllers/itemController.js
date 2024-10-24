@@ -24,8 +24,27 @@ const {
 // };
 
 const getAllItemsAPI = async (req, res) => {
-  const { rows } = await getAllItems();
-  await handleGetAllAPI(res, rows);
+  try {
+    const { rows } = await getAllItems();
+
+    // Convert BLOB images to base64 if they exist
+    const updatedRows = rows.map((item) => {
+      if (item.PICTURE) {
+        // Convert BLOB to Base64
+        const base64Image = item.PICTURE.toString("base64");
+        // Create a URL for the image
+        item.PICTURE = `data:image/png;base64,${base64Image}`;
+      } else {
+        item.PICTURE = null; // Or a default image URL
+      }
+      return item;
+    });
+
+    await handleGetAllAPI(res, updatedRows);
+  } catch (error) {
+    console.error(`Error fetching all items: ${error.message}`);
+    res.status(500).json({ message: "Error fetching all items." });
+  }
 };
 
 const getItemByIdAPI = async (req, res) => {
@@ -79,34 +98,52 @@ const createItemAPI = async (req, res) => {
 
 // Revised updateItemAPI to handle all attributes and image upload
 const updateItemAPI = async (req, res) => {
-  const { id } = req.params;
-  const {
-    item_name,
-    quantity,
-    unit_price,
-    category_id,
-    description,
-    expiry_date,
-    special_status,
-  } = req.body;
-  const picture = req.file ? req.file.path : null;
   try {
-    await updateItem(
-      id,
+    const itemId = req.params.id; // Ensure this is correctly reading the `id`
+    const {
       item_name,
       quantity,
       unit_price,
       category_id,
-      picture,
+      description,
+      expiry_date,
+      special_status,
+    } = req.body;
+
+    // Create a file path only if an image is uploaded
+    let picturePath = null;
+    if (req.file) {
+      picturePath = `/uploads/others/${req.file.filename}`;
+    }
+
+    // Ensure itemId is not undefined
+    if (!itemId) {
+      return res.status(400).json({ message: "Item ID is required." });
+    }
+
+    // Update item by calling the service function
+    await updateItem(
+      itemId,
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      picturePath,
       description,
       expiry_date,
       special_status
     );
-    res.status(200).json({ message: "Item updated successfully." });
+
+    res.status(200).json({
+      message: "Item updated successfully!",
+      picturePath: picturePath ? `http://localhost:8080${picturePath}` : null,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error updating item.", error: error.message });
+    console.error("Error updating item:", error);
+    res.status(500).json({
+      message: "Error occurred while updating item.",
+      error: error.message,
+    });
   }
 };
 

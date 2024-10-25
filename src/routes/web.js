@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = require("../config/multerConfig");
 
 const {
   getAllItemsAPI,
@@ -56,6 +57,7 @@ const {
   createOrderDetailAPI,
   getOrderByCustomerIdAPI,
   updateOrderByIdAPI,
+  updateOrderViewByIdAPI,
   getAllOrdersByTodayAPI,
 } = require("../controllers/orderControllers");
 const {
@@ -67,11 +69,19 @@ const {
   getSaleRportsAPI,
 } = require("../controllers/reportController");
 
+const {
+  getAllAdminAPI,
+  getAdminByIdAPI,
+  createAdminAPI,
+  updateAdminAPI,
+} = require("../controllers/adminController");
+
 const router = express.Router();
 
 // Define the routes as per requirements
 router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
+
 router.get("/items/category/:categoryId", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/items/labels", getAllLabelsAPI);
@@ -97,8 +107,10 @@ router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
 router.get("/sales_by_month/:month", getSalesSumByMonthAPI);
 router.get("/sales_reports", getSaleRportsAPI);
+router.get("/admin", getAllAdminAPI);
+router.get("/admin/:id", getAdminByIdAPI);
 
-router.post("/item/create", createItemAPI);
+router.post("/item/create", upload.single("picture"), createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);
 router.post("/customer/signin", signInCustomerAPI);
@@ -107,13 +119,17 @@ router.post("/category/create", createCategoryAPI);
 router.post("/payment/create", createPaymentAPI);
 router.post("/order/create", createOrderAPI);
 router.post("/order_detail/create", createOrderDetailAPI);
+router.post("/admin/create", createAdminAPI);
 
-router.put("/item/update/:id", updateItemAPI);
+// router.put("/item/update/:id", updateItemAPI);
+router.put("/item/update/:id", upload.single("picture"), updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);
 router.put("/customers/update/:id", updateCustomerAPI);
 router.put("/cart/update/:id", updateCartAPI);
 router.put("/order/update/:orderId", updateStatusOrderbyIdAPI);
 router.put("/order/update_details/:orderId", updateOrderByIdAPI);
+router.put("/order/update_view/:orderId", updateOrderViewByIdAPI);
+router.put("/admin/update/:id", updateAdminAPI);
 
 router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);

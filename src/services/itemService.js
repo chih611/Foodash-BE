@@ -5,19 +5,89 @@ const getAllItems = async () => {
   return { rows, fields };
 };
 
-const createItem = async (item_name, price) => {
-  await connection.query(`INSERT INTO ITEMS (ITEM_NAME) VALUES (?);`, [
-    item_name,
-    price,
-  ]);
+const createItem = async (req, res) => {
+  try {
+    // Ensure that an image file was uploaded
+    if (!req.file) {
+      return res.status(400).send("You must select an image file.");
+    }
+
+    const {
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      description,
+      expiry_date,
+      special_status,
+    } = req.body;
+
+    // Create the file path for storing in the database
+    const picturePath = `/uploads/others/${req.file.filename}`;
+
+    // Insert the new item into the ITEMS table
+    const query = `
+      INSERT INTO ITEMS (ITEM_NAME, QUANTITY, UNIT_PRICE, CATEGORY_ID, PICTURE, DESCRIPTION, EXPIRY_DATE, SPECIAL_STATUS)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    await connection.query(query, [
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      picturePath,
+      description,
+      expiry_date,
+      special_status,
+    ]);
+
+    res.status(200).json({
+      message: "Item created successfully!",
+      picturePath: `http://localhost:8080${picturePath}`,
+    });
+  } catch (error) {
+    console.error("Error creating item:", error);
+    res.status(500).json({
+      message: "Error occurred while creating item.",
+      error: error.message,
+    });
+  }
 };
 
-const updateItem = async (itemId, itemName, price) => {
-  await connection.query(`UPDATE ITEMS SET ITEM_NAME = ? WHERE ITEM_ID = ?;`, [
-    itemName,
-    price,
-    itemId,
-  ]);
+// Update item including handling image uploads
+const updateItem = async (
+  itemId,
+  item_name,
+  quantity,
+  unit_price,
+  category_id,
+  picturePath,
+  description,
+  expiry_date,
+  special_status
+) => {
+  try {
+    const query = `
+      UPDATE ITEMS 
+      SET ITEM_NAME = ?, QUANTITY = ?, UNIT_PRICE = ?, CATEGORY_ID = ?, 
+          PICTURE = COALESCE(?, PICTURE), DESCRIPTION = ?, EXPIRY_DATE = ?, SPECIAL_STATUS = ?
+      WHERE ITEM_ID = ?
+    `;
+    await connection.query(query, [
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      picturePath,
+      description,
+      expiry_date,
+      special_status,
+      itemId,
+    ]);
+  } catch (error) {
+    console.error("Error updating item in service:", error);
+    throw error; // Properly throw the error so the controller can handle it
+  }
 };
 
 const getItemById = async (item_id) => {

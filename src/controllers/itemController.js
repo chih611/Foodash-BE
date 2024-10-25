@@ -37,8 +37,8 @@ const getItemByIdAPI = async (req, res) => {
 };
 
 const createItemAPI = async (req, res) => {
-  const { item_name, price } = req.query;
-  await createItem(item_name, price);
+  const { name, quantity, price,category_id,description,special} = req.query;
+  await createItem(name, quantity, price,category_id,description,special);
   await handleCreateAPI(res);
 };
 

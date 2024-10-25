@@ -9,6 +9,8 @@ const {
   getModificationById,
   getItemById,
   getAllLabels,
+  getAllIngredients,
+  getAllModifications,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
@@ -17,20 +19,48 @@ const {
   handleDeleteAPI,
 } = require("../models/handlingModel");
 
-const getHomePage = (req, res) => {
-  return res.render("home");
-};
+// const getHomePage = (req, res) => {
+//   return res.render("home");
+// };
 
 const getAllItemsAPI = async (req, res) => {
-  const { rows } = await getAllItems();
-  await handleGetAllAPI(res, rows);
+  try {
+    const { rows } = await getAllItems();
+
+    // Convert BLOB images to base64 if they exist
+    const updatedRows = rows.map((item) => {
+      if (item.PICTURE) {
+        // Convert BLOB to Base64
+        const base64Image = item.PICTURE.toString("base64");
+        // Create a URL for the image
+        item.PICTURE = `data:image/png;base64,${base64Image}`;
+      } else {
+        item.PICTURE = null; // Or a default image URL
+      }
+      return item;
+    });
+
+    await handleGetAllAPI(res, updatedRows);
+  } catch (error) {
+    console.error(`Error fetching all items: ${error.message}`);
+    res.status(500).json({ message: "Error fetching all items." });
+  }
 };
 
 const getItemByIdAPI = async (req, res) => {
   const { id } = req.params;
   const rows = await getItemById(id);
   if (rows.length > 0) {
-    res.status(200).json(rows);
+    const item = rows[0];
+    if (item.PICTURE) {
+      // Convert Buffer to Base64
+      const base64Image = item.PICTURE.toString("base64");
+      // Create a URL for the image
+      item.PICTURE = `data:image/png;base64,${base64Image}`;
+    } else {
+      item.PICTURE = null; // Or a default image URL
+    }
+    res.status(200).json(item);
   } else {
     res.status(404).json({ message: "No items found" });
   }
@@ -43,10 +73,53 @@ const createItemAPI = async (req, res) => {
 };
 
 const updateItemAPI = async (req, res) => {
-  const { id } = req.params;
-  const { item_name, price } = req.query;
-  await updateItem(id, item_name, price);
-  await handleUpdateAPI(res);
+  try {
+    const itemId = req.params.id; // Ensure this is correctly reading the `id`
+    const {
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      description,
+      expiry_date,
+      special_status,
+    } = req.body;
+
+    // Create a file path only if an image is uploaded
+    let picturePath = null;
+    if (req.file) {
+      picturePath = `/uploads/others/${req.file.filename}`;
+    }
+
+    // Ensure itemId is not undefined
+    if (!itemId) {
+      return res.status(400).json({ message: "Item ID is required." });
+    }
+
+    // Update item by calling the service function
+    await updateItem(
+      itemId,
+      item_name,
+      quantity,
+      unit_price,
+      category_id,
+      picturePath,
+      description,
+      expiry_date,
+      special_status
+    );
+
+    res.status(200).json({
+      message: "Item updated successfully!",
+      picturePath: picturePath ? `http://localhost:8080${picturePath}` : null,
+    });
+  } catch (error) {
+    console.error("Error updating item:", error);
+    res.status(500).json({
+      message: "Error occurred while updating item.",
+      error: error.message,
+    });
+  }
 };
 
 const deleteItemAPI = async (req, res) => {
@@ -75,6 +148,11 @@ const getModificationByIdAPI = async (req, res) => {
   }
 };
 
+const getAllModificationsAPI = async (req, res) => {
+  const { rows } = await getAllModifications();
+  await handleGetAllAPI(res, rows);
+};
+
 const searchItemByNameAPI = async (req, res) => {
   const { itemName } = req.params;
   try {
@@ -94,8 +172,17 @@ const getAllLabelsAPI = async (req, res) => {
   await handleGetAllAPI(res, rows);
 };
 
+const getAllIngredientsAPI = async (req, res) => {
+  try {
+    const ingredients = await getAllIngredients();
+    res.status(200).json(ingredients);
+  } catch (error) {
+    console.error(`Error fetching ingredients: ${error.message}`);
+    res.status(500).json({ message: "Error fetching ingredients" });
+  }
+};
+
 module.exports = {
-  getHomePage,
   getAllItemsAPI,
   createItemAPI,
   updateItemAPI,
@@ -105,4 +192,6 @@ module.exports = {
   getModificationByIdAPI,
   searchItemByNameAPI,
   getAllLabelsAPI,
+  getAllIngredientsAPI,
+  getAllModificationsAPI,
 };

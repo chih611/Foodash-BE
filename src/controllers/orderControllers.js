@@ -9,6 +9,7 @@ const {
   getOrderByCustomerId,
   updateOrderById,
   findOrderByDuedate,
+  updateOrderViewById,
   getAllordersByToday,
 } = require("../services/orderService");
 const {
@@ -118,6 +119,60 @@ const updateOrderByIdAPI = async (req, res) => {
   }
 };
 
+const updateOrderViewByIdAPI = async (req, res) => {
+  const { orderId } = req.params;
+  const {
+    DUEDATE,
+    RECIPIENT,
+    ADDRESS,
+    PHONE,
+    EMAIL,
+    DELIVER,
+    PAYMENT,
+    TAXES,
+    DELIVERY_FEE,
+    SERVICE_FEE,
+    UTENSIL,
+    GIFTWRAP,
+    PROMOTION,
+    SUBTOTAL,
+    CREATE_DATE,
+    TOTAL,
+    STATUS,
+  } = req.body;
+
+  try {
+    const { rows } = await updateOrderViewById(
+      orderId,
+      DUEDATE,
+      RECIPIENT,
+      ADDRESS,
+      PHONE,
+      EMAIL,
+      DELIVER,
+      PAYMENT,
+      TAXES,
+      DELIVERY_FEE,
+      SERVICE_FEE,
+      UTENSIL,
+      GIFTWRAP,
+      PROMOTION,
+      SUBTOTAL,
+      CREATE_DATE,
+      TOTAL,
+      STATUS
+    );
+
+    if (rows.affectedRows === 0) {
+      return res.status(404).json({ message: "Order not found." });
+    }
+    res.status(200).json({ message: "Order updated successfully." });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(500).json({ message: "Error updating order" });
+  }
+};
+
 const updateStatusOrderbyIdAPI = async (req, res) => {
   const { orderId } = req.params;
   const { status } = req.body;
@@ -214,4 +269,5 @@ module.exports = {
   getOrderByCustomerIdAPI,
   updateOrderByIdAPI,
   getAllOrdersByTodayAPI,
+  updateOrderViewByIdAPI,
 };

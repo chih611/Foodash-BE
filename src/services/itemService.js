@@ -35,6 +35,15 @@ const getItemById = async (item_id) => {
   return rows;
 };
 
+const getAllIngredients = async () => {
+  const [rows, fields] = await connection.query(
+    "SELECT INGREDIENTS FROM ITEM_MODIFICATION"
+  );
+
+  // Return all ingredients as they are from the database
+  return rows;
+};
+
 const getItemByCategory = async (category_id) => {
   try {
     console.log(`Fetching items for category ID: ${category_id}`);
@@ -78,6 +87,13 @@ const searchItemByName = async (item_name) => {
   }
 };
 
+const getAllModifications = async () => {
+  const [rows, fields] = await connection.query(
+    "SELECT * FROM ITEM_MODIFICATION"
+  );
+  return { rows, fields };
+};
+
 const deleteItembyId = async (item_id) => {
   const [rows, fields] = await connection.query(
     `DELETE FROM ITEMS WHERE ITEM_ID = ?;`,
@@ -108,4 +124,6 @@ module.exports = {
   getModificationById,
   searchItemByName,
   getAllLabels,
+  getAllIngredients,
+  getAllModifications,
 };

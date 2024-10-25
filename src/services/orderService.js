@@ -9,7 +9,7 @@ const getAllorders = async () => {
 
 const getAllordersByToday = async () => {
   const [rows] = await connection.query(
-    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() ORDER BY `Create Date` DESC LIMIT 4;"
+    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() OR (`Duedate`) = CURDATE();"
   );
   return { rows };
 };
@@ -82,6 +82,71 @@ const updateOrderById = async (
     ]
   );
 
+  return { rows };
+};
+
+const updateOrderViewById = async (
+  orderId,
+  DUEDATE,
+  RECIPIENT,
+  ADDRESS,
+  PHONE,
+  EMAIL,
+  DELIVER,
+  PAYMENT,
+  TAXES,
+  DELIVERY_FEE,
+  SERVICE_FEE,
+  UTENSIL,
+  GIFTWRAP,
+  PROMOTION,
+  SUBTOTAL,
+  CREATE_DATE,
+  TOTAL,
+  STATUS
+) => {
+  const [rows] = await connection.query(
+    `UPDATE foodash.ORDER_VIEW 
+     SET 
+       Duedate = ?, 
+       Recipient = ?, 
+       Address = ?, 
+       Phone = ?, 
+       Email = ?, 
+       Deliver = ?, 
+       Payment = ?, 
+       Taxes = ?, 
+       \`Delivery Fee\` = ?, 
+       \`Service Fee\`= ?, 
+       UTENSIL = ?, 
+       Giftwrap = ?, 
+       Promotion = ?, 
+       Subtotal = ?, 
+       \`Create Date\` = ?, 
+       Total = ?, 
+       Status = ? 
+     WHERE ID = ?;`,
+    [
+      DUEDATE,
+      RECIPIENT,
+      ADDRESS,
+      PHONE,
+      EMAIL,
+      DELIVER,
+      PAYMENT,
+      TAXES,
+      DELIVERY_FEE,
+      SERVICE_FEE,
+      UTENSIL,
+      GIFTWRAP,
+      PROMOTION,
+      SUBTOTAL,
+      CREATE_DATE,
+      TOTAL,
+      STATUS,
+      orderId,
+    ]
+  );
   return { rows };
 };
 
@@ -204,4 +269,5 @@ module.exports = {
   createOrderDetail,
   getOrderByCustomerId,
   updateOrderById,
+  updateOrderViewById,
 };

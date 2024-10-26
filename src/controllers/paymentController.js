@@ -15,7 +15,7 @@ const createPaymentAPI = async (req, res) => {
       sourceId,
       amountMoney: {
         currency: "AUD",
-        amount: 100,
+        amount: 1,
       },
     });
 

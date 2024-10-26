@@ -67,36 +67,11 @@ const getItemByIdAPI = async (req, res) => {
 };
 
 const createItemAPI = async (req, res) => {
-  const {
-    item_name,
-    quantity,
-    unit_price,
-    category_id,
-    description,
-    expiry_date,
-    special_status,
-  } = req.body;
-  const picture = req.file ? req.file.path : null;
-  try {
-    await createItem(
-      item_name,
-      quantity,
-      unit_price,
-      category_id,
-      picture,
-      description,
-      expiry_date,
-      special_status
-    );
-    res.status(201).json({ message: "Item created successfully." });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating item.", error: error.message });
-  }
+  const { name, quantity, price,category_id,description,special} = req.query;
+  await createItem(name, quantity, price,category_id,description,special);
+  await handleCreateAPI(res);
 };
 
-// Revised updateItemAPI to handle all attributes and image upload
 const updateItemAPI = async (req, res) => {
   try {
     const itemId = req.params.id; // Ensure this is correctly reading the `id`

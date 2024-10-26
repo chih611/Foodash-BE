@@ -11,7 +11,8 @@ const getAllCurrentCategorySalesAPI = async (req, res) => {
 };
 
 const getSalesSumByMonthAPI = async (req, res) => {
-  const { rows } = await getSalesSumByMonth();
+  const { month } = req.params;
+  const { rows } = await getSalesSumByMonth(month);
   await handleGetAllAPI(res, rows);
 };
 

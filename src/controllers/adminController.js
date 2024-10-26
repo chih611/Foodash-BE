@@ -32,12 +32,17 @@ const getAdminByIdAPI = async (req, res) => {
 // Create admin API
 
 const createAdminAPI = async (req, res) => {
-  const { admin_name, admin_email, admin_password, admin_type } = req.body;
-
+  const { ADMIN_NAME, ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_TYPE } = req.body; // Ensure keys match the frontend
   try {
-    await createAdmin({ admin_name, admin_email, admin_password, admin_type });
+    await createAdmin({
+      admin_name: ADMIN_NAME,
+      admin_email: ADMIN_EMAIL,
+      admin_password: ADMIN_PASSWORD,
+      admin_type: ADMIN_TYPE,
+    });
     res.status(201).json({ message: "Admin created successfully." });
   } catch (error) {
+    console.error("Error in createAdminAPI:", error);
     res.status(500).json({ message: "Failed to create admin." });
   }
 };

@@ -158,6 +158,14 @@ const findOrderDetailByOrderId = async (orderId) => {
   return { rows };
 };
 
+const findOrderByOrdersTableById = async (orderId) => {
+  const [rows] = await connection.query(
+    `SELECT * FROM foodash.ORDERS WHERE ORDER_ID=?;`,
+    [orderId]
+  );
+  return { rows };
+};
+
 const findOrderByOrderId = async (orderId) => {
   const [rows] = await connection.query(
     `SELECT * FROM foodash.ORDER_VIEW WHERE ID=?;`,
@@ -270,4 +278,5 @@ module.exports = {
   getOrderByCustomerId,
   updateOrderById,
   updateOrderViewById,
+  findOrderByOrdersTableById,
 };

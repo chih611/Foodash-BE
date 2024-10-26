@@ -49,6 +49,7 @@ const {
 const { createPaymentAPI } = require("../controllers/paymentController");
 const {
   getAllOrdersAPI,
+  findOrderByOrdersTableByIdAPI,
   findOrderDetailByOrderIdAPI,
   findOrderByOrderIdAPI,
   updateStatusOrderbyIdAPI,
@@ -94,6 +95,7 @@ router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
 router.get("/customer/:id", findCustomerByIdAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/order", getAllOrdersAPI);
+router.get("/order_table/:orderId", findOrderByOrdersTableByIdAPI);
 router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
 router.get("/order/:orderId", findOrderByOrderIdAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);

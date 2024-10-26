@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const { paymentsApi } = new Client({
   accessToken: process.env.SQUARE_ACCESS_TOKEN,
-  environment: Environment.Production,
+  environment: Environment.Sandbox,
 });
 
 const createPaymentAPI = async (req, res) => {
@@ -18,9 +18,9 @@ const createPaymentAPI = async (req, res) => {
         amount: 1,
       },
     });
-
+    res.status(200).json(result.status);
     // res.status(200).send(JSON.stringify(result));
-    console.log(result);
+    // console.log(result);
   } catch (error) {
     if (error instanceof ApiError) {
       error.result.errors.forEach(function (e) {

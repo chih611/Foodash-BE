@@ -15,12 +15,12 @@ const createPaymentAPI = async (req, res) => {
       sourceId,
       amountMoney: {
         currency: "AUD",
-        amount: 100,
+        amount: 1,
       },
     });
-
+    res.status(200).json(result.status);
     // res.status(200).send(JSON.stringify(result));
-    console.log(result);
+    // console.log(result);
   } catch (error) {
     if (error instanceof ApiError) {
       error.result.errors.forEach(function (e) {

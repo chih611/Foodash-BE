@@ -284,4 +284,6 @@ module.exports = {
   updateOrderByIdAPI,
   getAllOrdersByTodayAPI,
   updateOrderViewByIdAPI,
+  findOrderByOrdersTableByIdAPI,
+  getAllordersThisMonthAPI,
 };

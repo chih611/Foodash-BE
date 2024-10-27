@@ -287,4 +287,5 @@ module.exports = {
   updateOrderById,
   updateOrderViewById,
   findOrderByOrdersTableById,
+  getAllordersThisMonth,
 };

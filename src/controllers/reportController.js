@@ -21,8 +21,14 @@ const getSaleRportsAPI = async (req, res) => {
   await handleGetAllAPI(res, rows);
 };
 
+const getSaleMethodAPI = async (req, res) => {
+  const { rows } = await getSaleRports();
+  await handleGetAllAPI(res, rows);
+};
+
 module.exports = {
   getAllCurrentCategorySalesAPI,
   getSalesSumByMonthAPI,
   getSaleRportsAPI,
+  getSaleMethodAPI,
 };

@@ -3,6 +3,7 @@ const {
   getAdminById,
   createAdmin,
   updateAdmin,
+  validateAdminSignIn,
 } = require("../services/adminService");
 
 // Get all admins
@@ -26,6 +27,20 @@ const getAdminByIdAPI = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve admin by ID." });
+  }
+};
+
+const signInAdminAPI = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const admin = await validateAdminSignIn(email, password);
+    if (admin) {
+      res.status(200).json({ message: "Admin sign-in successful", admin });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to sign in admin." });
   }
 };
 
@@ -72,4 +87,6 @@ module.exports = {
   getAdminByIdAPI,
   createAdminAPI,
   updateAdminAPI,
+
+  signInAdminAPI,
 };

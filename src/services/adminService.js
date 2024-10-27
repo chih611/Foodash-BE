@@ -16,6 +16,14 @@ const getAdminById = async (adminId) => {
   return rows.length > 0 ? rows[0] : null;
 };
 
+const validateAdminSignIn = async (email, password) => {
+  const [rows] = await connection.query(
+    "SELECT * FROM ADMIN WHERE ADMIN_EMAIL = ? AND ADMIN_PASSWORD = ?",
+    [email, password]
+  );
+  return rows.length > 0 ? rows[0] : null;
+};
+
 const createAdmin = async ({
   admin_name,
   admin_email,
@@ -58,4 +66,5 @@ module.exports = {
   getAdminById,
   createAdmin,
   updateAdmin,
+  validateAdminSignIn,
 };

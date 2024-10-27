@@ -76,6 +76,7 @@ const {
   getAdminByIdAPI,
   createAdminAPI,
   updateAdminAPI,
+  signInAdminAPI,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -118,6 +119,7 @@ router.post("/item/create", upload.single("picture"), createItemAPI);
 router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);
 router.post("/customer/signin", signInCustomerAPI);
+router.post("/admin/signin", signInAdminAPI);
 router.post("/cart/create", createCartAPI);
 router.post("/category/create", createCategoryAPI);
 router.post("/payment/create", createPaymentAPI);

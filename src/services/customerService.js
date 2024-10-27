@@ -64,6 +64,7 @@ const createCustomer = async ({
 };
 
 // Update customer details (handles both general updates and guest-to-user upgrades)
+// Update customer details (handles both general updates and guest-to-user upgrades)
 const updateCustomer = async ({
   customerId,
   firstName,
@@ -73,7 +74,7 @@ const updateCustomer = async ({
   address,
   password,
   customerType,
-  dob,
+  DATE_OF_BIRTH, // Ensure consistency with the database column
   gender,
   abn,
   dietaryPreference,
@@ -111,7 +112,7 @@ const updateCustomer = async ({
     phoneNumber,
     address,
     password || null,
-    dob,
+    DATE_OF_BIRTH, // Use DATE_OF_BIRTH to match database
     gender,
     customerType || "guest",
     abn,

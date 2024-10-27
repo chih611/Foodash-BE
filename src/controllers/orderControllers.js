@@ -9,6 +9,7 @@ const {
   getOrderByCustomerId,
   updateOrderById,
   findOrderByDuedate,
+  findOrderByOrdersTableById,
   updateOrderViewById,
   getAllordersByToday,
   getAllordersThisMonth,
@@ -44,6 +45,13 @@ const getOrderByCustomerIdAPI = async (req, res) => {
 const findOrderDetailByOrderIdAPI = async (req, res) => {
   const { orderId } = req.params;
   const { rows } = await findOrderDetailByOrderId(orderId);
+  await handleGetAllAPI(res, rows);
+};
+
+const findOrderByOrdersTableByIdAPI = async (req, res) => {
+  const { orderId } = req.params;
+  const { rows } = await findOrderByOrdersTableById(orderId);
+
   await handleGetAllAPI(res, rows);
 };
 
@@ -276,5 +284,4 @@ module.exports = {
   updateOrderByIdAPI,
   getAllOrdersByTodayAPI,
   updateOrderViewByIdAPI,
-  getAllordersThisMonthAPI
 };

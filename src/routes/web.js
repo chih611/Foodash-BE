@@ -49,6 +49,7 @@ const {
 const { createPaymentAPI } = require("../controllers/paymentController");
 const {
   getAllOrdersAPI,
+  findOrderByOrdersTableByIdAPI,
   findOrderDetailByOrderIdAPI,
   findOrderByOrderIdAPI,
   updateStatusOrderbyIdAPI,
@@ -95,6 +96,7 @@ router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);
 router.get("/customer/:id", findCustomerByIdAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/order", getAllOrdersAPI);
+router.get("/order_table/:orderId", findOrderByOrdersTableByIdAPI);
 router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
 router.get("/order/:orderId", findOrderByOrderIdAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
@@ -107,7 +109,7 @@ router.get("/cart", getAllCartsAPI);
 router.get("/cart/customer/:customerId", getCartByCustomerIdAPI);
 router.get("/category", getAllCategoriesAPI);
 router.get("/inventory", getAllInventoryAPI);
-router.get("/sales_by_month", getSalesSumByMonthAPI);
+router.get("/sales_by_month/:month", getSalesSumByMonthAPI);
 router.get("/sales_reports", getSaleRportsAPI);
 router.get("/admin", getAllAdminAPI);
 router.get("/admin/:id", getAdminByIdAPI);

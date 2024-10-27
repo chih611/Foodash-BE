@@ -17,7 +17,7 @@ const getAllordersByToday = async () => {
 
 const getAllordersThisMonth = async () =>{
   const [rows] = await connection.query(
-    "SELECT Category, Sold, Stock, Created, Expired FROM foodash.SalesByCategory_byMonth WHERE `Month` = MONTH(CURDATE());"
+    "SELECT `Product Sales`, Credit, Cash, `Gift Card`, Other, Fees FROM foodash.Report_summary_byMonth WHERE `Month` = MONTH(CURDATE());"
   );
   return {rows};
 }
@@ -26,6 +26,13 @@ const getOrderByCustomerId = async (customerId) => {
   const [rows] = await connection.query(
     "SELECT * FROM foodash.ORDERS WHERE CUSTOMER_ID=?;",
     [customerId]
+  );
+  return { rows };
+};
+
+const getCountOrderByCustomerId = async () => {
+  const [rows] = await connection.query(
+    "SELECT CUSTOMER_ID, COUNT(ORDER_ID) AS total_orders FROM foodash.ORDERS GROUP BY CUSTOMER_ID;"
   );
   return { rows };
 };
@@ -288,4 +295,5 @@ module.exports = {
   updateOrderViewById,
   findOrderByOrdersTableById,
   getAllordersThisMonth,
+  getCountOrderByCustomerId,
 };

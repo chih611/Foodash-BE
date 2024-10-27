@@ -59,6 +59,7 @@ const {
   updateOrderByIdAPI,
   updateOrderViewByIdAPI,
   getAllOrdersByTodayAPI,
+  getAllordersThisMonthAPI,
 } = require("../controllers/orderControllers");
 const {
   getAllNotificationsAPI,
@@ -99,6 +100,7 @@ router.get("/order/:orderId", findOrderByOrderIdAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
 router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
 router.get("/orders_today", getAllOrdersByTodayAPI);
+router.get("/orders_thismonth", getAllordersThisMonthAPI);
 router.get("/notification", getAllNotificationsAPI);
 router.get("/current_cate_sales", getAllCurrentCategorySalesAPI);
 router.get("/cart", getAllCartsAPI);

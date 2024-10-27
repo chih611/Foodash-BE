@@ -61,6 +61,7 @@ const {
   updateOrderViewByIdAPI,
   getAllOrdersByTodayAPI,
   getAllordersThisMonthAPI,
+  getCountOrderByCustomerIdAPI,
 } = require("../controllers/orderControllers");
 const {
   getAllNotificationsAPI,
@@ -100,6 +101,7 @@ router.get("/order_table/:orderId", findOrderByOrdersTableByIdAPI);
 router.get("/order_details/:orderId", findOrderDetailByOrderIdAPI);
 router.get("/order/:orderId", findOrderByOrderIdAPI);
 router.get("/order/customer/:customerId", getOrderByCustomerIdAPI);
+router.get("/order_total_by_customer/", getCountOrderByCustomerIdAPI);
 router.get("/order/customer/:full_name", findOrderByCustomerNameAPI);
 router.get("/orders_today", getAllOrdersByTodayAPI);
 router.get("/orders_thismonth", getAllordersThisMonthAPI);

@@ -30,6 +30,13 @@ const getOrderByCustomerId = async (customerId) => {
   return { rows };
 };
 
+const getCountOrderByCustomerId = async () => {
+  const [rows] = await connection.query(
+    "SELECT CUSTOMER_ID, COUNT(ORDER_ID) AS total_orders FROM foodash.ORDERS GROUP BY CUSTOMER_ID;"
+  );
+  return { rows };
+};
+
 const updateOrderById = async (
   orderId,
   CUSTOMER_ID,
@@ -288,4 +295,5 @@ module.exports = {
   updateOrderViewById,
   findOrderByOrdersTableById,
   getAllordersThisMonth,
+  getCountOrderByCustomerId,
 };

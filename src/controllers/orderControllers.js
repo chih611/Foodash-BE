@@ -13,6 +13,7 @@ const {
   updateOrderViewById,
   getAllordersByToday,
   getAllordersThisMonth,
+  getCountOrderByCustomerId,
 } = require("../services/orderService");
 const {
   handleGetAllAPI,
@@ -39,6 +40,11 @@ const getAllordersThisMonthAPI = async (req, res) => {
 const getOrderByCustomerIdAPI = async (req, res) => {
   const { customerId } = req.params;
   const { rows } = await getOrderByCustomerId(customerId);
+  await handleGetAllAPI(res, rows);
+};
+
+const getCountOrderByCustomerIdAPI = async (req, res) => {
+  const { rows } = await getCountOrderByCustomerId();
   await handleGetAllAPI(res, rows);
 };
 
@@ -286,4 +292,5 @@ module.exports = {
   updateOrderViewByIdAPI,
   findOrderByOrdersTableByIdAPI,
   getAllordersThisMonthAPI,
+  getCountOrderByCustomerIdAPI,
 };

@@ -17,7 +17,7 @@ const getAllordersByToday = async () => {
 
 const getAllordersThisMonth = async () =>{
   const [rows] = await connection.query(
-    "SELECT Category, Sold, Stock, Created, Expired FROM foodash.SalesByCategory_byMonth WHERE `Month` = MONTH(CURDATE());"
+    "SELECT `Product Sales`, Credit, Cash, `Gift Card`, Other, Fees FROM foodash.Report_summary_byMonth WHERE `Month` = MONTH(CURDATE());"
   );
   return {rows};
 }

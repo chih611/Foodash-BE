@@ -2,6 +2,7 @@
 const {
   getAllItems,
   createItem,
+  createItemModificationByItemId,
   updateItem,
   deleteItembyId,
   getItemByCategory,
@@ -76,6 +77,17 @@ const createItemAPI = async (req, res) => {
   // const debug = req.query;
   // console.log(debug);
   await createItem(name, quantity, price, category_id, description, special);
+  await handleCreateAPI(res);
+};
+
+const createItemModificationAPI = async (req, res) => {
+  const { itemId, modification, ingredients, labelId } = req.query;
+  await createItemModificationByItemId(
+    itemId,
+    modification,
+    ingredients,
+    labelId
+  );
   await handleCreateAPI(res);
 };
 
@@ -221,4 +233,5 @@ module.exports = {
   getAllAdminItemsAPI,
   getAdminItemDetailAPI,
   getAdminModificationbyIdAPI,
+  createItemModificationAPI,
 };

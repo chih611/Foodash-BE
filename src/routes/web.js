@@ -16,6 +16,7 @@ const {
   getAllAdminItemsAPI,
   getAdminItemDetailAPI,
   getAdminModificationbyIdAPI,
+  createItemModificationAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -123,6 +124,7 @@ router.get("/admin", getAllAdminAPI);
 router.get("/admin/:id", getAdminByIdAPI);
 
 router.post("/item/create", upload.single("picture"), createItemAPI);
+router.post("/item/create/modification", createItemModificationAPI);
 router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);
 router.post("/customer/signin", signInCustomerAPI);

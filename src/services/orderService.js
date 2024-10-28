@@ -23,7 +23,7 @@ const getAllordersThisMonth = async () => {
 
 const getOrderByCustomerId = async (customerId) => {
   const [rows] = await connection.query(
-    "SELECT * FROM foodash.ORDERS WHERE CUSTOMER_ID=?;",
+    "SELECT ID, `Full Name`, Duedate, Recipient, Address, Phone, Email, Deliver, Payment, Taxes, `Delivery Fee`, `Service Fee`, UTENSIL, Giftwrap, Promotion, Subtotal, `Create Date`, Total, Status, Updated, Feedback, Refund, Recurring FROM foodash.Order_view WHERE CustomerID=?;",
     [customerId]
   );
   return { rows };

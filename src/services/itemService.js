@@ -5,17 +5,20 @@ const getAllItems = async () => {
   return { rows, fields };
 };
 
-const createItem = async (name, quantity, price,category_id,description,special) => {
-  const [rows] = await connection.query(`INSERT INTO ITEMS 
-    (ITEM_NAME, QUANTITY, UNIT_PRICE, CATEGORY_ID, DESCRIPTION, SPECIAL_STATUS)
-VALUES(?, ?, ?, ?, ?, ?);`, [
+const createItem = async (
   name,
   quantity,
   price,
   category_id,
   description,
   special
-  ]);
+) => {
+  const [rows] = await connection.query(
+    `INSERT INTO ITEMS 
+    (ITEM_NAME, QUANTITY, UNIT_PRICE, CATEGORY_ID, DESCRIPTION, SPECIAL_STATUS)
+VALUES(?, ?, ?, ?, ?, ?);`,
+    [name, quantity, price, category_id, description, special]
+  );
   return { rows };
 };
 
@@ -95,22 +98,24 @@ const getAllModifications = async () => {
 };
 
 const updateModificationByItemId = async (ModId, modification, ingredients) => {
-  await connection.query(`UPDATE ITEM_MODIFICATION SET MODIFICATION=?, INGREDIENTS=? WHERE MOD_ID = ?;`, [
-    modification,
-    ingredients,
-    ModId,
-  ]);
+  await connection.query(
+    `UPDATE ITEM_MODIFICATION SET MODIFICATION=?, INGREDIENTS=? WHERE MOD_ID = ?;`,
+    [modification, ingredients, ModId]
+  );
 };
 
-const createItemModificationByItemId = async (itemId, modification, ingredients, labelId) => {
-  const [rows] = await connection.query(`INSERT INTO ITEM_MODIFICATION 
-    (ITEM_ID, MODIFICATION, INGREDIENTS, LABEL_ID)
-VALUES(?, ?, ?, ?);`, [
+const createItemModificationByItemId = async (
   itemId,
   modification,
   ingredients,
   labelId
-  ]);
+) => {
+  const [rows] = await connection.query(
+    `INSERT INTO ITEM_MODIFICATION 
+    (ITEM_ID, MODIFICATION, INGREDIENTS, LABEL_ID)
+VALUES(?, ?, ?, ?);`,
+    [itemId, modification, JSON.stringify(ingredients), labelId]
+  );
   return { rows };
 };
 

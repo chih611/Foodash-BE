@@ -28,7 +28,7 @@ const updateItem = async (itemId, itemName, price) => {
 };
 
 const getItemById = async (item_id) => {
-  const [rows, fields] = await connection.query(
+  const [rows] = await connection.query(
     `SELECT * FROM ITEMS WHERE ITEM_ID = ?;`,
     [item_id]
   );

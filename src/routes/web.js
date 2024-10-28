@@ -85,7 +85,6 @@ const router = express.Router();
 // Define the routes as per requirements
 router.get("/item", getAllItemsAPI);
 router.get("/item/:id", getItemByIdAPI);
-
 router.get("/items/category/:categoryId", getItemByCategoryAPI);
 router.get("/items/search/:itemName", searchItemByNameAPI);
 router.get("/items/labels", getAllLabelsAPI);

@@ -2,25 +2,24 @@ const connection = require("../config/database");
 
 const getAllorders = async () => {
   const [rows] = await connection.query(
-    "SELECT ID, `Full Name`, Duedate, `Create Date`, Total, Status, Recurring FROM foodash.ORDER_VIEW;"
+    "SELECT ID, `Full Name`, Duedate, `Create Date`, Total, Status, Recurring FROM foodash.Order_view;"
   );
   return { rows };
 };
 
 const getAllordersByToday = async () => {
   const [rows] = await connection.query(
-    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.ORDER_VIEW WHERE DATE(`Create Date`) = CURDATE() OR (`Duedate`) = CURDATE();"
+    "SELECT ID,Duedate,  `Create Date`, Status FROM foodash.Order_view WHERE DATE(`Create Date`) = CURDATE() OR (`Duedate`) = CURDATE();"
   );
   return { rows };
 };
 
-
-const getAllordersThisMonth = async () =>{
+const getAllordersThisMonth = async () => {
   const [rows] = await connection.query(
     "SELECT `Product Sales`, Credit, Cash, `Gift Card`, Other, Fees FROM foodash.Report_summary_byMonth WHERE `Month` = MONTH(CURDATE());"
   );
-  return {rows};
-}
+  return { rows };
+};
 
 const getOrderByCustomerId = async (customerId) => {
   const [rows] = await connection.query(
@@ -121,7 +120,7 @@ const updateOrderViewById = async (
   STATUS
 ) => {
   const [rows] = await connection.query(
-    `UPDATE foodash.ORDER_VIEW 
+    `UPDATE foodash.Order_view 
      SET 
        Duedate = ?, 
        Recipient = ?, 
@@ -167,7 +166,7 @@ const updateOrderViewById = async (
 
 const findOrderDetailByOrderId = async (orderId) => {
   const [rows] = await connection.query(
-    `SELECT * FROM foodash.ORDER_DETAIL_VIEW WHERE ID=?;`,
+    `SELECT * FROM foodash.Order_detail_view WHERE ID=?;`,
     [orderId]
   );
   return { rows };
@@ -183,7 +182,7 @@ const findOrderByOrdersTableById = async (orderId) => {
 
 const findOrderByOrderId = async (orderId) => {
   const [rows] = await connection.query(
-    `SELECT * FROM foodash.ORDER_VIEW WHERE ID=?;`,
+    `SELECT * FROM foodash.Order_view WHERE ID=?;`,
     [orderId]
   );
   return { rows };
@@ -191,7 +190,7 @@ const findOrderByOrderId = async (orderId) => {
 
 const findOrderByCustomerName = async (full_name) => {
   const [rows] = await connection.query(
-    "SELECT * FROM foodash.ORDER_VIEW WHERE `Full Name`=?;",
+    "SELECT * FROM foodash.Order_view WHERE `Full Name`=?;",
     [full_name]
   );
   return { rows };
@@ -199,7 +198,7 @@ const findOrderByCustomerName = async (full_name) => {
 
 const updateStatusOrderbyId = async (status, orderId) => {
   const [rows] = await connection.query(
-    `UPDATE foodash.ORDER_VIEW SET Status=? WHERE ID=?;`,
+    `UPDATE foodash.Order_view SET Status=? WHERE ID=?;`,
     [status, orderId]
   );
   return { rows };

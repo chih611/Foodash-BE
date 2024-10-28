@@ -81,9 +81,13 @@ const createItemAPI = async (req, res) => {
 };
 
 const createItemModificationAPI = async (req, res) => {
-  const {itemId, modification, ingredients, labelId} =
-    req.query;
-  await createItemModificationByItemId(itemId, modification, ingredients, labelId);
+  const { itemId, modification, ingredients, labelId } = req.query;
+  await createItemModificationByItemId(
+    itemId,
+    modification,
+    ingredients,
+    labelId
+  );
   await handleCreateAPI(res);
 };
 

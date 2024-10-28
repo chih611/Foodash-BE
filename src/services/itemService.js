@@ -94,6 +94,26 @@ const getAllModifications = async () => {
   return { rows, fields };
 };
 
+const updateModificationByItemId = async (ModId, modification, ingredients) => {
+  await connection.query(`UPDATE ITEM_MODIFICATION SET MODIFICATION=?, INGREDIENTS=? WHERE MOD_ID = ?;`, [
+    modification,
+    ingredients,
+    ModId,
+  ]);
+};
+
+const createItemModificationByItemId = async (itemId, modification, ingredients, labelId) => {
+  const [rows] = await connection.query(`INSERT INTO ITEM_MODIFICATION 
+    (ITEM_ID, MODIFICATION, INGREDIENTS, LABEL_ID)
+VALUES(?, ?, ?, ?);`, [
+  itemId,
+  modification,
+  ingredients,
+  labelId
+  ]);
+  return { rows };
+};
+
 const deleteItembyId = async (item_id) => {
   const [rows, fields] = await connection.query(
     `DELETE FROM ITEMS WHERE ITEM_ID = ?;`,
@@ -152,4 +172,6 @@ module.exports = {
   getAllAdminItems,
   getAdminItemDetail,
   getAdminModificationbyId,
+  updateModificationByItemId,
+  createItemModificationByItemId,
 };

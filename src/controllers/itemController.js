@@ -11,6 +11,10 @@ const {
   getAllLabels,
   getAllIngredients,
   getAllModifications,
+  getSpecificAdminItems,
+  getAllAdminItems,
+  getAdminItemDetail,
+  getAdminModificationbyId,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
@@ -67,10 +71,11 @@ const getItemByIdAPI = async (req, res) => {
 };
 
 const createItemAPI = async (req, res) => {
-  const { name, quantity, price,category_id,description,special} = req.query;
+  const { name, quantity, price, category_id, description, special } =
+    req.query;
   // const debug = req.query;
   // console.log(debug);
-  await createItem(name, quantity, price,category_id,description,special);
+  await createItem(name, quantity, price, category_id, description, special);
   await handleCreateAPI(res);
 };
 
@@ -184,6 +189,23 @@ const getAllIngredientsAPI = async (req, res) => {
   }
 };
 
+const getAllAdminItemsAPI = async (req, res) => {
+  const { rows } = await getAllAdminItems();
+  await handleGetAllAPI(res, rows);
+};
+
+const getAdminItemDetailAPI = async (req, res) => {
+  const { item_id } = req.params;
+  const { rows } = await getAdminItemDetail(item_id);
+  await handleGetAllAPI(res, rows);
+};
+
+const getAdminModificationbyIdAPI = async (req, res) => {
+  const { mod_id } = req.params;
+  const { rows } = await getAdminModificationbyId(mod_id);
+  await handleGetAllAPI(res, rows);
+};
+
 module.exports = {
   getAllItemsAPI,
   createItemAPI,
@@ -196,4 +218,7 @@ module.exports = {
   getAllLabelsAPI,
   getAllIngredientsAPI,
   getAllModificationsAPI,
+  getAllAdminItemsAPI,
+  getAdminItemDetailAPI,
+  getAdminModificationbyIdAPI,
 };

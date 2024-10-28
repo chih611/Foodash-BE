@@ -1,6 +1,6 @@
 const handleGetAllAPI = async (res, rows) => {
   if (rows.length === 0) {
-    res.send(`No data found!`);
+    res.send(false);
   } else {
     res.send(rows);
   }

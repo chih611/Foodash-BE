@@ -114,6 +114,29 @@ const getAllLabels = async () => {
   const [rows, fields] = await connection.query("SELECT * FROM LABELS");
   return { rows, fields };
 };
+
+const getAllAdminItems = async () => {
+  const [rows] = await connection.query(
+    "SELECT Picture,ID, Name, Quantity, `Unit price`, `Expiry date`, `Special status` FROM Product_view"
+  );
+  return { rows };
+};
+
+const getAdminItemDetail = async (item_id) => {
+  const [rows] = await connection.query(
+    "SELECT * FROM foodash.Product_view WHERE ID = ?;",
+    [item_id]
+  );
+  return { rows };
+};
+
+const getAdminModificationbyId = async (mod_id) => {
+  const [rows] = await connection.query(
+    "SELECT ModID, ItemID, Modification, Ingredients, `Label name`, Labels FROM foodash.Modification_view WHERE ItemID = ?;",
+    [mod_id]
+  );
+  return { rows };
+};
 module.exports = {
   getAllItems,
   createItem,
@@ -126,4 +149,7 @@ module.exports = {
   getAllLabels,
   getAllIngredients,
   getAllModifications,
+  getAllAdminItems,
+  getAdminItemDetail,
+  getAdminModificationbyId,
 };

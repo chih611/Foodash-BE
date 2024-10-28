@@ -13,6 +13,9 @@ const {
   getAllLabelsAPI,
   getAllIngredientsAPI,
   getAllModificationsAPI,
+  getAllAdminItemsAPI,
+  getAdminItemDetailAPI,
+  getAdminModificationbyIdAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -91,6 +94,9 @@ router.get("/items/labels", getAllLabelsAPI);
 router.get("/items/ingredients", getAllIngredientsAPI);
 router.get("/items/modification/:id", getModificationByIdAPI);
 router.get("/items/modifications", getAllModificationsAPI);
+router.get("/items_admin/modification/:mod_id", getAdminModificationbyIdAPI);
+router.get("/items_admin/detail/:item_id", getAdminItemDetailAPI);
+router.get("/items_admin", getAllAdminItemsAPI);
 router.get("/customer", getAllCustomersAPI);
 router.get("/customer/email/:email", findCustomerByEmailAPI);
 router.get("/customer/contact/:phoneNumber", findCustomerByContactAPI);

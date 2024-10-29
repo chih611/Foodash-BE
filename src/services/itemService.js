@@ -22,12 +22,31 @@ VALUES(?, ?, ?, ?, ?, ?);`,
   return { rows };
 };
 
-const updateItem = async (itemId, itemName, price) => {
-  await connection.query(`UPDATE ITEMS SET ITEM_NAME = ? WHERE ITEM_ID = ?;`, [
-    itemName,
-    price,
-    itemId,
-  ]);
+const updateItem = async (
+  itemId,
+  itemName,
+  quantity,
+  unitPrice,
+  category,
+  picture,
+  description,
+  expDate,
+  specialStt
+) => {
+  await connection.query(
+    `UPDATE foodash.ITEMS SET ITEM_NAME=?, QUANTITY=?, UNIT_PRICE=?, CATEGORY_ID=?, PICTURE=?, DESCRIPTION=?, EXPIRY_DATE=?, SPECIAL_STATUS=? WHERE ITEM_ID=?;`,
+    [
+      itemName,
+      quantity,
+      unitPrice,
+      category,
+      picture,
+      description,
+      expDate,
+      specialStt,
+      itemId,
+    ]
+  );
 };
 
 const getItemById = async (item_id) => {
@@ -162,6 +181,8 @@ const getAdminModificationbyId = async (mod_id) => {
   );
   return { rows };
 };
+
+
 module.exports = {
   getAllItems,
   createItem,

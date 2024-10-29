@@ -137,7 +137,7 @@ router.post("/order_detail/create", createOrderDetailAPI);
 router.post("/admin/create", createAdminAPI);
 
 // router.put("/item/update/:id", updateItemAPI);
-router.put("/item/update/:id", upload.single("picture"), updateItemAPI);
+router.put("/item/update/:itemId", updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);
 router.put("/customers/update/:id", updateCustomerAPI);
 router.put("/cart/update/:id", updateCartAPI);

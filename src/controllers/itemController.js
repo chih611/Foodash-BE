@@ -92,45 +92,33 @@ const createItemModificationAPI = async (req, res) => {
 };
 
 const updateItemAPI = async (req, res) => {
+  const {
+    itemName,
+    quantity,
+    unitPrice,
+    category,
+    picture,
+    description,
+    expDate,
+    specialStt,
+  } = req.body;
+  const { itemId } = req.params;
   try {
-    const itemId = req.params.id; // Ensure this is correctly reading the `id`
-    const {
-      item_name,
-      quantity,
-      unit_price,
-      category_id,
-      description,
-      expiry_date,
-      special_status,
-    } = req.body;
-
-    // Create a file path only if an image is uploaded
-    let picturePath = null;
-    if (req.file) {
-      picturePath = `/uploads/others/${req.file.filename}`;
-    }
-
-    // Ensure itemId is not undefined
-    if (!itemId) {
-      return res.status(400).json({ message: "Item ID is required." });
-    }
-
-    // Update item by calling the service function
+    const updateData = {};
     await updateItem(
       itemId,
-      item_name,
+      itemName,
       quantity,
-      unit_price,
-      category_id,
-      picturePath,
+      unitPrice,
+      category,
+      picture,
       description,
-      expiry_date,
-      special_status
+      expDate,
+      specialStt
     );
 
     res.status(200).json({
       message: "Item updated successfully!",
-      picturePath: picturePath ? `http://localhost:8080${picturePath}` : null,
     });
   } catch (error) {
     console.error("Error updating item:", error);

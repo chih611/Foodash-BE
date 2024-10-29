@@ -13,6 +13,7 @@ const {
   getAllIngredients,
   getAllModifications,
   getSpecificAdminItems,
+  updateModificationByItemId,
   getAllAdminItems,
   getAdminItemDetail,
   getAdminModificationbyId,
@@ -218,6 +219,23 @@ const getAdminModificationbyIdAPI = async (req, res) => {
   await handleGetAllAPI(res, rows);
 };
 
+const updateItemModificationByItemIdAPI = async (req, res) => {
+  const { ModId, itemId, modification, ingredients, labelId } = req.query;
+  try {
+    await updateModificationByItemId(
+      ModId,
+      itemId,
+      modification,
+      ingredients,
+      labelId
+    );
+    await handleUpdateAPI(res); // Assuming handleUpdateAPI sends the response.
+  } catch (error) {
+    console.error(`Error updating item modification: ${error.message}`);
+    res.status(500).json({ message: "Error updating item modification" });
+  }
+};
+
 module.exports = {
   getAllItemsAPI,
   createItemAPI,
@@ -234,4 +252,5 @@ module.exports = {
   getAdminItemDetailAPI,
   getAdminModificationbyIdAPI,
   createItemModificationAPI,
+  updateItemModificationByItemIdAPI,
 };

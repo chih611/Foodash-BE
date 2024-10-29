@@ -274,7 +274,7 @@ const createOrderDetail = async (
       LABEL_ID,
       NOTES,
       ITEM_ID,
-      JSON.stringify(MODIFICATION),
+      MODIFICATION,
     ]
   );
   return { rows };

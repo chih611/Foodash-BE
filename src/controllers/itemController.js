@@ -200,7 +200,7 @@ const getAllAdminItemsAPI = async (req, res) => {
 const getAdminItemDetailAPI = async (req, res) => {
   const { item_id } = req.params;
   const { rows } = await getAdminItemDetail(item_id);
-  await handleGetAllAPI(res, rows);
+  await handleGetOneAPI(res, rows);
 };
 
 const getAdminModificationbyIdAPI = async (req, res) => {

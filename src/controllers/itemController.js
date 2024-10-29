@@ -17,12 +17,14 @@ const {
   getAllAdminItems,
   getAdminItemDetail,
   getAdminModificationbyId,
+  getModificationByIdForUpdate,
 } = require("../services/itemService");
 const {
   handleGetAllAPI,
   handleCreateAPI,
   handleUpdateAPI,
   handleDeleteAPI,
+  handleGetOneAPI,
 } = require("../models/handlingModel");
 
 // const getHomePage = (req, res) => {
@@ -207,16 +209,17 @@ const getAdminModificationbyIdAPI = async (req, res) => {
   await handleGetAllAPI(res, rows);
 };
 
+const getModificationByIdForUpdateAPI = async (req, res) => {
+  const { mod_id } = req.params;
+  const rows = await getModificationByIdForUpdate(mod_id);
+  await handleGetOneAPI(res, rows);
+};
+
 const updateItemModificationByItemIdAPI = async (req, res) => {
-  const { ModId, itemId, modification, ingredients, labelId } = req.query;
+  const { Modification, Ingredients } = req.body;
+  const { ModId } = req.params;
   try {
-    await updateModificationByItemId(
-      ModId,
-      itemId,
-      modification,
-      ingredients,
-      labelId
-    );
+    await updateModificationByItemId(ModId, Modification, Ingredients);
     await handleUpdateAPI(res); // Assuming handleUpdateAPI sends the response.
   } catch (error) {
     console.error(`Error updating item modification: ${error.message}`);
@@ -241,4 +244,5 @@ module.exports = {
   getAdminModificationbyIdAPI,
   createItemModificationAPI,
   updateItemModificationByItemIdAPI,
+  getModificationByIdForUpdateAPI,
 };

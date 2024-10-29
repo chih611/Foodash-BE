@@ -34,7 +34,7 @@ const updateItem = async (
   specialStt
 ) => {
   await connection.query(
-    `UPDATE foodash.ITEMS SET ITEM_NAME=?, QUANTITY=?, UNIT_PRICE=?, CATEGORY_ID=?, PICTURE=?, DESCRIPTION=?, EXPIRY_DATE=?, SPECIAL_STATUS=? WHERE ITEM_ID=?;`,
+    "UPDATE foodash.ITEMS SET ITEM_NAME=?, QUANTITY=?, UNIT_PRICE=?, CATEGORY_ID=?, PICTURE=?, DESCRIPTION=?, EXPIRY_DATE=?, SPECIAL_STATUS=? WHERE ITEM_ID=?;",
     [
       itemName,
       quantity,
@@ -116,26 +116,17 @@ const getAllModifications = async () => {
   return { rows, fields };
 };
 
-const updateModificationByItemId = async (
-  ModId,
-  itemId,
-  modification,
-  ingredients,
-  labelId
-) => {
-  console.log(
-    `Updating Modification with ModId: ${ModId}, modification: ${modification}, ingredients: ${ingredients}, labelId: ${labelId}`
-  );
+const updateModificationByItemId = async (ModId, Modification, Ingredients) => {
   const [result] = await connection.query(
-    `UPDATE ITEM_MODIFICATION SET MODIFICATION = ?, ITEM_ID = ?, INGREDIENTS = ?, LABEL_ID = ? WHERE MOD_ID = ?;`,
-    [modification, itemId, ingredients, labelId, ModId]
+    `UPDATE ITEM_MODIFICATION SET MODIFICATION = ?, INGREDIENTS = ? WHERE MOD_ID = ?;`,
+    [Modification, Ingredients, ModId]
   );
   console.log(`Update Result: ${JSON.stringify(result)}`);
   return result;
 };
 
 const createItemModificationByItemId = async (
-  itemId,
+  ItemID,
   modification,
   ingredients,
   labelId
@@ -144,7 +135,7 @@ const createItemModificationByItemId = async (
     `INSERT INTO ITEM_MODIFICATION 
     (ITEM_ID, MODIFICATION, INGREDIENTS, LABEL_ID)
 VALUES(?, ?, ?, ?);`,
-    [itemId, modification, JSON.stringify(ingredients), labelId]
+    [ItemID, modification, JSON.stringify(ingredients), labelId]
   );
   return { rows };
 };
@@ -165,9 +156,16 @@ const getModificationById = async (item_id) => {
   return rows;
 };
 
+const getModificationByIdForUpdate = async (mod_id) => {
+  const [rows] = await connection.query(
+    "SELECT  ItemID, `Item name`,  Modification, Ingredients, `Label name`, Labels FROM foodash.Modification_view WHERE ModID=?;",
+    [mod_id]
+  );
+  return rows;
+};
 const getAllLabels = async () => {
-  const [rows, fields] = await connection.query("SELECT * FROM LABELS");
-  return { rows, fields };
+  const [rows] = await connection.query("SELECT * FROM LABELS");
+  return rows;
 };
 
 const getAllAdminItems = async () => {
@@ -187,12 +185,11 @@ const getAdminItemDetail = async (item_id) => {
 
 const getAdminModificationbyId = async (mod_id) => {
   const [rows] = await connection.query(
-    "SELECT ModID, ItemID, Modification, Ingredients, `Label name`, Labels FROM foodash.Modification_view WHERE ItemID = ?;",
+    "SELECT ModID, ItemID, Modification, Ingredients, LabelID, `Label name` FROM foodash.Modification_view WHERE ItemID = ?;",
     [mod_id]
   );
   return { rows };
 };
-
 
 module.exports = {
   getAllItems,
@@ -211,4 +208,5 @@ module.exports = {
   getAdminModificationbyId,
   updateModificationByItemId,
   createItemModificationByItemId,
+  getModificationByIdForUpdate,
 };

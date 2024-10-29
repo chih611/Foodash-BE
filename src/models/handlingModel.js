@@ -5,6 +5,9 @@ const handleGetAllAPI = async (res, rows) => {
     res.send(rows);
   }
 };
+const handleGetOneAPI = async (res, rows) => {
+  res.send(rows[0] ? rows[0] : "No data found!");
+};
 const handleCreateAPI = async (res) => {
   res.status(200).json("Created successfully!");
 };
@@ -20,4 +23,5 @@ module.exports = {
   handleCreateAPI,
   handleUpdateAPI,
   handleDeleteAPI,
+  handleGetOneAPI,
 };

@@ -18,6 +18,7 @@ const {
   getAdminModificationbyIdAPI,
   createItemModificationAPI,
   updateItemModificationByItemIdAPI,
+  getModificationByIdForUpdateAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -97,6 +98,10 @@ router.get("/items/ingredients", getAllIngredientsAPI);
 router.get("/items/modification/:id", getModificationByIdAPI);
 router.get("/items/modifications", getAllModificationsAPI);
 router.get("/items_admin/modification/:mod_id", getAdminModificationbyIdAPI);
+router.get(
+  "/items_admin_update/modification/:mod_id",
+  getModificationByIdForUpdateAPI
+);
 router.get("/items_admin/detail/:item_id", getAdminItemDetailAPI);
 router.get("/items_admin", getAllAdminItemsAPI);
 router.get("/customer", getAllCustomersAPI);
@@ -137,7 +142,6 @@ router.post("/order/create", createOrderAPI);
 router.post("/order_detail/create", createOrderDetailAPI);
 router.post("/admin/create", createAdminAPI);
 
-// router.put("/item/update/:id", updateItemAPI);
 router.put("/item/update/:itemId", updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);
 router.put("/customers/update/:id", updateCustomerAPI);

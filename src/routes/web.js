@@ -17,6 +17,7 @@ const {
   getAdminItemDetailAPI,
   getAdminModificationbyIdAPI,
   createItemModificationAPI,
+  updateItemModificationByItemIdAPI,
 } = require("../controllers/itemController");
 
 const {
@@ -145,6 +146,10 @@ router.put("/order/update/:orderId", updateStatusOrderbyIdAPI);
 router.put("/order/update_details/:orderId", updateOrderByIdAPI);
 router.put("/order/update_view/:orderId", updateOrderViewByIdAPI);
 router.put("/admin/update/:id", updateAdminAPI);
+router.put(
+  "/item/update/modification/:ModId",
+  updateItemModificationByItemIdAPI
+);
 
 router.delete("/item/delete/:id", deleteItemAPI);
 router.delete("/inventory/delete/:id", deleteInventoryAPI);

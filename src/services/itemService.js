@@ -116,11 +116,22 @@ const getAllModifications = async () => {
   return { rows, fields };
 };
 
-const updateModificationByItemId = async (ModId, modification, ingredients) => {
-  await connection.query(
-    `UPDATE ITEM_MODIFICATION SET MODIFICATION=?, INGREDIENTS=? WHERE MOD_ID = ?;`,
-    [modification, ingredients, ModId]
+const updateModificationByItemId = async (
+  ModId,
+  itemId,
+  modification,
+  ingredients,
+  labelId
+) => {
+  console.log(
+    `Updating Modification with ModId: ${ModId}, modification: ${modification}, ingredients: ${ingredients}, labelId: ${labelId}`
   );
+  const [result] = await connection.query(
+    `UPDATE ITEM_MODIFICATION SET MODIFICATION = ?, ITEM_ID = ?, INGREDIENTS = ?, LABEL_ID = ? WHERE MOD_ID = ?;`,
+    [modification, itemId, ingredients, labelId, ModId]
+  );
+  console.log(`Update Result: ${JSON.stringify(result)}`);
+  return result;
 };
 
 const createItemModificationByItemId = async (

@@ -117,6 +117,7 @@ const getAllModifications = async () => {
 };
 
 const updateModificationByItemId = async (ModId, Modification, Ingredients) => {
+  console.log(Ingredients, Modification);
   const [result] = await connection.query(
     `UPDATE ITEM_MODIFICATION SET MODIFICATION = ?, INGREDIENTS = ? WHERE MOD_ID = ?;`,
     [Modification, Ingredients, ModId]
@@ -165,7 +166,7 @@ const getModificationByIdForUpdate = async (mod_id) => {
 };
 const getAllLabels = async () => {
   const [rows] = await connection.query("SELECT * FROM LABELS");
-  return rows;
+  return { rows };
 };
 
 const getAllAdminItems = async () => {

@@ -51,7 +51,7 @@ const getAllItemsAPI = async (req, res) => {
     await handleGetAllAPI(res, updatedRows);
   } catch (error) {
     console.error(`Error fetching all items: ${error.message}`);
-    res.status(500).json({ message: "Error fetching all items." });
+    res.status(500).json(error);
   }
 };
 

@@ -120,26 +120,7 @@ const updateOrderViewById = async (
   STATUS
 ) => {
   const [rows] = await connection.query(
-    `UPDATE foodash.Order_view 
-     SET 
-       Duedate = ?, 
-       Recipient = ?, 
-       Address = ?, 
-       Phone = ?, 
-       Email = ?, 
-       Deliver = ?, 
-       Payment = ?, 
-       Taxes = ?, 
-       \`Delivery Fee\` = ?, 
-       \`Service Fee\`= ?, 
-       UTENSIL = ?, 
-       Giftwrap = ?, 
-       Promotion = ?, 
-       Subtotal = ?, 
-       \`Create Date\` = ?, 
-       Total = ?, 
-       Status = ? 
-     WHERE ID = ?;`,
+    "UPDATE foodash.ORDERS SET DUEDATE=?, RECIPIENT=?, ADDRESS=?, PHONE=?, EMAIL=?, DELIVER=?, PAYMENT=?, TAXES=?, DELIVERY_FEE=?, SERVICE_FEE=?, UTENSIL=?, GIFTWRAP=?, PROMO=?, SUBTOTAL=?, CREATED_DATE=?, TOTAL=?, STATUS=? WHERE ORDER_ID=?;",
     [
       DUEDATE,
       RECIPIENT,

@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "ec2.foodash.org",
-      script: "./server.js",
+      script: "./src/server.js",
       env: {
         DB_USER: "admin",
         DB_PASSWORD: "capstone",

@@ -1,4 +1,5 @@
-// const connection = require('../config/database');
+const cloudinary = require("cloudinary").v2;
+
 const {
   getAllItems,
   createItem,
@@ -27,9 +28,12 @@ const {
   handleGetOneAPI,
 } = require("../models/handlingModel");
 
-// const getHomePage = (req, res) => {
-//   return res.render("home");
-// };
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // Add to your .env file
+  api_key: process.env.CLOUDINARY_API_KEY,       // Add to your .env file
+  api_secret: process.env.CLOUDINARY_API_SECRET, // Add to your .env file
+});
 
 const getAllItemsAPI = async (req, res) => {
   try {
@@ -75,11 +79,9 @@ const getItemByIdAPI = async (req, res) => {
 };
 
 const createItemAPI = async (req, res) => {
-  const { name, quantity, price, category_id, description, special } =
+  const { name, quantity, price, category_id, description, special, picture } =
     req.query;
-  // const debug = req.query;
-  // console.log(debug);
-  await createItem(name, quantity, price, category_id, description, special);
+  await createItem(name, quantity, price, category_id, description, special, picture);
   await handleCreateAPI(res);
 };
 

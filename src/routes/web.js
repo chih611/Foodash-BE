@@ -1,5 +1,5 @@
 const express = require("express");
-const upload = require("../config/multerConfig");
+const multer = require("multer");
 
 const {
   getAllItemsAPI,
@@ -85,8 +85,11 @@ const {
   updateAdminAPI,
   signInAdminAPI,
 } = require("../controllers/adminController");
+const { uploadAPI } = require("../controllers/uploadControler");
 
 const router = express.Router();
+const storage = multer.memoryStorage(); // Use memory storage for multer
+const upload = multer({ storage });
 
 // Define the routes as per requirements
 router.get("/item", getAllItemsAPI);
@@ -129,7 +132,7 @@ router.get("/sales_reports", getSaleRportsAPI);
 router.get("/admin", getAllAdminAPI);
 router.get("/admin/:id", getAdminByIdAPI);
 
-router.post("/item/create", upload.single("picture"), createItemAPI);
+router.post("/item/create", createItemAPI);
 router.post("/item/create/modification", createItemModificationAPI);
 router.post("/inventory/create", createInventoryAPI);
 router.post("/customer/create", createCustomerAPI);
@@ -141,6 +144,7 @@ router.post("/payment/create", createPaymentAPI);
 router.post("/order/create", createOrderAPI);
 router.post("/order_detail/create", createOrderDetailAPI);
 router.post("/admin/create", createAdminAPI);
+router.post("/upload_img", upload.single("file"), uploadAPI);
 
 router.put("/item/update/:itemId", updateItemAPI);
 router.put("/inventory/update/:id", updateInventoryAPI);

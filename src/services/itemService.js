@@ -11,13 +11,14 @@ const createItem = async (
   price,
   category_id,
   description,
-  special
+  special,
+  picture
 ) => {
   const [rows] = await connection.query(
     `INSERT INTO ITEMS 
-    (ITEM_NAME, QUANTITY, UNIT_PRICE, CATEGORY_ID, DESCRIPTION, SPECIAL_STATUS)
-VALUES(?, ?, ?, ?, ?, ?);`,
-    [name, quantity, price, category_id, description, special]
+    (ITEM_NAME, QUANTITY, UNIT_PRICE, CATEGORY_ID, DESCRIPTION, SPECIAL_STATUS, PICTURE)
+VALUES(?, ?, ?, ?, ?, ?, ?);`,
+    [name, quantity, price, category_id, description, special, picture]
   );
   return { rows };
 };
@@ -127,7 +128,7 @@ const updateModificationByItemId = async (ModId, Modification, Ingredients) => {
 };
 
 const createItemModificationByItemId = async (
-  ItemID,
+  itemId,
   modification,
   ingredients,
   labelId
@@ -136,7 +137,7 @@ const createItemModificationByItemId = async (
     `INSERT INTO ITEM_MODIFICATION 
     (ITEM_ID, MODIFICATION, INGREDIENTS, LABEL_ID)
 VALUES(?, ?, ?, ?);`,
-    [ItemID, modification, JSON.stringify(ingredients), labelId]
+    [itemId, modification, JSON.stringify(ingredients), labelId]
   );
   return { rows };
 };
